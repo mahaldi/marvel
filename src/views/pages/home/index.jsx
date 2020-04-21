@@ -1,6 +1,11 @@
 import React from 'react'
+import { fetchCharacters } from '../../../actions'
+import { connect } from 'react-redux';
 
 class Home extends React.Component {
+	componentDidMount(){
+		this.props.fetchCharacters()
+	}
 	render() {
 		return (
 			<React.Fragment>
@@ -14,5 +19,9 @@ class Home extends React.Component {
 		)
 	}
 }
-
-export default Home
+const mapStateToProps = (state) =>{
+	return {
+		characters : state.characters
+	}
+}
+export default connect( mapStateToProps, {fetchCharacters})(Home)
