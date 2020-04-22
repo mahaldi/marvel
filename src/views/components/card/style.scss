@@ -1,0 +1,14 @@
+.card{
+    cursor: pointer;
+    .card-content{
+        text-align: left;
+        span{
+            width: 100px;
+            text-align: right;
+            float: right;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+}

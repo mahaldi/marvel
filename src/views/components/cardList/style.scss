@@ -1,0 +1,15 @@
+@import '../../../assets/scss/mixins.scss';
+.card-list{
+	display: block;
+	.card{
+		width: 216px;
+		display: inline-block;
+		margin: 8px;
+		@include mq-small-only{
+			width: 100%;
+		}
+	}
+	.mini-loader{
+		width: 150px;
+	}
+}

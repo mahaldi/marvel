@@ -1,4 +1,6 @@
 export default {
     characters : [],
-    character : {}
+    character : {},
+    isLoading : false,
+    charactersPagination : {}
 }

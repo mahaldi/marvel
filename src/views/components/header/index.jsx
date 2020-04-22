@@ -1,14 +1,14 @@
 import React from "react";
-
+import './style.scss';
+import Logo from '../../../assets/static/marvel.svg'
 const Header = () => {
 	return (
 		<React.Fragment>
-			<div className="hero-head">
-				<nav className="navbar">
+			<nav className="navbar is-fixed-top has-background-white">
 					<div className="container">
 						<div className="navbar-brand">
 							<a className="navbar-item" href="/">
-								<img src="https://bulma.io/images/bulma-type-white.png" alt="Logo" />
+								<img src={Logo} alt="Logo" />
 							</a>
 							<span className="navbar-burger burger" data-target="navbarMenuHeroB">
 								<span></span>
@@ -39,7 +39,6 @@ const Header = () => {
 						</div>
 					</div>
 				</nav>
-			</div>
 		</React.Fragment>
 	)
 }

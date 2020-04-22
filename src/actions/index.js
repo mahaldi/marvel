@@ -1,4 +1,4 @@
-import { FETCH_CHARACTERS, FETCH_CHARACTER } from './types'
+import { FETCH_CHARACTERS, FETCH_CHARACTER, CHARACTERS_PAGINATION } from './types'
 import IndexAPI from '../apis'
 export const fetchCharacters = (nameStartsWith=null, limit=20, offset=0) => async dispatch =>{
     let params = {
@@ -8,9 +8,14 @@ export const fetchCharacters = (nameStartsWith=null, limit=20, offset=0) => asyn
     }
     const response = await IndexAPI.getCharacters(params)
     dispatch({
-        type: FETCH_CHARACTERS,
+        type: CHARACTERS_PAGINATION,
         payload: response.data.data
     })
+    dispatch({
+        type: FETCH_CHARACTERS,
+        payload: response.data.data.results
+    })
+    return
 }
 export const fetchCharacter = id => async dispatch =>{
     const response = await IndexAPI.getCharacter(id)

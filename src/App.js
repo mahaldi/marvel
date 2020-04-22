@@ -2,15 +2,24 @@ import React from 'react';
 import './assets/scss/index.scss';
 import Header from './views/components/header'
 import Home from './views/pages/home'
+import Character from './views/pages/character'
+import { Router, Route, Switch } from 'react-router-dom';
+import { createBrowserHistory } from 'history'
+const history = createBrowserHistory();
 
 class App extends React.Component {
   render(){
     return (
       <React.Fragment>
-        <section className="hero is-info is-large">
+        <Router history={history}>
           <Header />
-          <Home />
-        </section>
+          <section className="container marvel">
+            <Switch>
+                <Route path="/" exact component={Home}/>
+                <Route path="/:id" exact component={Character}/>
+            </Switch>
+          </section>
+        </Router>
       </React.Fragment>
     );
   }
