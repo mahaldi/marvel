@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 import './style.scss'
 import { fetchCharacters } from '../../../actions/index'
 import { connect } from 'react-redux';
-import MiniLoader from '../../../assets/static/miniPokeball.gif'
+import MiniLoader from '../loader/miniLoader'
 class CardList extends React.Component {
 	state = {
     isLoading: false,
 	}
-	
+
 	handleScroll = () => {
     if (((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 300)) && !this.state.isLoading) {
 			this.setState({
@@ -23,13 +23,13 @@ class CardList extends React.Component {
 				});
 			})
 
-			
+
     }
 	}
 	componentDidMount = () => window.addEventListener('scroll', this.handleScroll)
 
 	componentWillUnmount = () => window.removeEventListener('scroll', this.handleScroll)
-	
+
 	render() {
 		let { data }  = this.props
 		return (
@@ -46,7 +46,7 @@ class CardList extends React.Component {
 				{(
 					() => {
 						if(this.state.isLoading){
-							return <img src={MiniLoader} alt="MiniLoader" className="mini-loader"/>
+							return <MiniLoader />
 						}
 					}
 				)()}

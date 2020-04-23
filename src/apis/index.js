@@ -18,9 +18,17 @@ class indexAPI {
 			params
 		})
 	}
-	
+
 	getCharacter(id){
-		return this.api.get(`/characters${id}`)
+		return this.api.get(`/characters/${id}`)
+	}
+
+	getComics(characterId) {
+		return this.api.get(`/characters/${characterId}/comics`)
+	}
+
+	getSeries(characterId) {
+		return this.api.get(`/characters/${characterId}/series`)
 	}
 }
 const IndexAPI = new indexAPI();

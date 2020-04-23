@@ -21,7 +21,7 @@ export const characterListPagination = (state=initialState.charactersPagination,
 export const character = (state = initialState.character, action) => {
 	switch (action.type) {
 		case FETCH_CHARACTER:
-			return { ...state, payload: action.payload };
+			return action.payload;
 		default:
 			return state
 	}

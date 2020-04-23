@@ -1,5 +1,6 @@
 import React from 'react'
 import './style.scss'
+import Image from '../image'
 
 class Card extends React.Component {
 	constructor(props) {
@@ -20,21 +21,20 @@ class Card extends React.Component {
 	}
 	render() {
 		let { data } = this.props
-		let thumbnailSize = '/portrait_incredible.'
 		return (
 			<React.Fragment>
 				<div className="card">
 					<div className="card-content-wrap">
 						<div className="card-image">
 							<figure className="image is-4by3">
-								<img src={data.thumbnail.path + thumbnailSize + data.thumbnail.extension} alt={data.name} />
+								<Image src={data.thumbnail.path} ext={data.thumbnail.extension} alt={data.name}/>
 							</figure>
 						</div>
 						<div className="card-content">
 							<ul>
 								<li>Name : <span> {data.name} </span></li>
 								<li>Comics : <span> {data.comics.available} </span></li>
-								<li>Events : <span> {data.events.available} </span></li>
+								<li>Series : <span> {data.series.available} </span></li>
 							</ul>
 						</div>
 					</div>
