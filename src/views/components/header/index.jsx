@@ -10,13 +10,13 @@ const Header = () => {
 							<a className="navbar-item" href="/">
 								<img src={Logo} alt="Logo" />
 							</a>
-							<span className="navbar-burger burger" data-target="navbarMenuHeroB">
+							{/* <span className="navbar-burger burger" data-target="navbarMenuHeroB">
 								<span></span>
 								<span></span>
 								<span></span>
-							</span>
+							</span> */}
 						</div>
-						<div id="navbarMenuHeroB" className="navbar-menu">
+						{/* <div id="navbarMenuHeroB" className="navbar-menu">
 							<div className="navbar-end">
 								<a className="navbar-item is-active" href="/">
 									Home
@@ -36,7 +36,7 @@ const Header = () => {
 									</a>
 								</span>
 							</div>
-						</div>
+						</div> */}
 					</div>
 				</nav>
 		</React.Fragment>
