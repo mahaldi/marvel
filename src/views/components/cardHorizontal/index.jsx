@@ -42,12 +42,10 @@ class CardHorizontal extends React.Component {
 							</div>
 							<div className="info-content urls">
 								{
-										data.urls.map((item)=>{
-											if(item.type === 'detail'){
-												return (
-													<a href={item.url} key={item.url}>{item.url}</a>
-												)
-											}
+										data.urls.map( item =>{
+											return (
+												<a href={item.url} key={item.url}>{item.url}</a>
+											)
 										})
 									}
 							</div>
