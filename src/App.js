@@ -1,26 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './assets/scss/index.scss';
+import Header from './views/components/header'
+import Home from './views/pages/home'
+import Character from './views/pages/character'
+import { Router, Route, Switch } from 'react-router-dom';
+import { createBrowserHistory } from 'history'
+const history = createBrowserHistory();
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  render(){
+    return (
+      <React.Fragment>
+        <Router history={history}>
+          <Header />
+          <section className="container marvel">
+            <Switch>
+                <Route path="/" exact component={Home}/>
+                <Route path="/:id" exact component={Character}/>
+            </Switch>
+          </section>
+        </Router>
+      </React.Fragment>
+    );
+  }
 }
 
 export default App;

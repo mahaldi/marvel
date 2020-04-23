@@ -1,0 +1,22 @@
+@import '../../../assets/scss/mixins.scss';
+
+.card{
+	cursor: pointer;
+	width: 216px;
+	display: inline-block;
+	margin: 8px;
+	@include mq-small-only{
+		width: 100%;
+	}
+	.card-content{
+		text-align: left;
+		span{
+			width: 100px;
+			text-align: right;
+			float: right;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+	}
+}
