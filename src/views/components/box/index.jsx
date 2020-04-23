@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { fetchComics, fetchSeries } from '../../../actions/index'
-import PropTypes  from 'prop-types'
+// import PropTypes  from 'prop-types'
 import MiniLoader from '../loader/miniLoader'
 import CardHorizontal from '../cardHorizontal'
 
