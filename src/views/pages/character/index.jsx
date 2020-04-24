@@ -19,8 +19,6 @@ class Character extends React.Component {
 		this.props.fetchCharacter(id).then((res)=>{
 
 		}).catch((err)=>{
-			console.log(err.response.data.status)
-
 			this.setState({
 				error : {
 					isError: true,
