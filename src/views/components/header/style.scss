@@ -1,5 +1,17 @@
 @import '../../../assets/scss/variables.scss';
 
-.navbar{
-    border-bottom: 1px solid hsl(0, 0%, 86%);
+.navbar-mws{
+	border-bottom: 1px solid hsl(0, 0%, 86%);
+	.navbar-start{
+		&.middle{
+			margin: 0 auto;
+			width: 500px;
+			.navbar-item{
+				width: 100%;
+			}
+		}
+	}
+	.navbar-end{
+		margin-left: 0;
+	}
 }

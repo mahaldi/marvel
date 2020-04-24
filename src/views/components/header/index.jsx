@@ -1,10 +1,12 @@
 import React from "react";
 import './style.scss';
 import Logo from '../../../assets/static/marvel.svg'
+import SearchInput from '../../components/searchInput'
+
 const Header = () => {
 	return (
 		<React.Fragment>
-			<nav className="navbar is-fixed-top has-background-white">
+			<nav className="navbar is-fixed-top has-background-white navbar-mws">
 					<div className="container">
 						<div className="navbar-brand">
 							<a className="navbar-item" href="/">
@@ -16,27 +18,29 @@ const Header = () => {
 								<span></span>
 							</span> */}
 						</div>
-						{/* <div id="navbarMenuHeroB" className="navbar-menu">
-							<div className="navbar-end">
-								<a className="navbar-item is-active" href="/">
-									Home
-                            </a>
-								<a className="navbar-item" href="/">
-									Examples
-                            </a>
-								<a className="navbar-item" href="/">
-									Documentation
-                            </a>
-								<span className="navbar-item">
-									<a className="button is-info is-inverted" href="/">
-										<span className="icon">
-											<i className="fab fa-github"></i>
-										</span>
-										<span>Download</span>
-									</a>
-								</span>
+						<div id="navbarMenuHeroB" className="navbar-menu">
+							<div className="navbar-start middle">
+								<div className="navbar-item">
+									<SearchInput />
+                </div>
 							</div>
-						</div> */}
+							<div className="navbar-end">
+								<div className="navbar-item has-dropdown is-hoverable">
+									<div className="navbar-link">
+										Theme
+									</div>
+									<div className="navbar-dropdown is-boxed">
+										<div className="navbar-item">
+											Dark Theme
+										</div>
+										<div className="navbar-item">
+											Light Theme
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</nav>
 		</React.Fragment>
