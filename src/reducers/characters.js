@@ -4,8 +4,7 @@ import initialState from './initialState'
 export const characterList = (state = initialState.characters, action) => {
 	switch (action.type) {
 		case FETCH_CHARACTERS:
-			let _state = state.concat(action.payload)
-			return _state
+			return state.concat(action.payload)
 		default:
 			return state
 	}

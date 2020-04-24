@@ -6,7 +6,8 @@ import './style.scss'
 import Loading from '../../components/loading/index'
 class Home extends React.Component {
 	componentDidMount(){
-		this.props.fetchCharacters()
+		if(this.props.characters.length < 1)
+			this.props.fetchCharacters()
 	}
 	render() {
 		let { characters } = this.props

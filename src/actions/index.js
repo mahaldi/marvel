@@ -23,7 +23,8 @@ export const fetchCharacter = id => async dispatch =>{
     dispatch({
         type: FETCH_CHARACTER,
         payload: response.data.data.results[0]
-    })
+		})
+		return response
 }
 export const fetchComics = characterId => async dispatch => {
 	const response = await IndexAPI.getComics(characterId)

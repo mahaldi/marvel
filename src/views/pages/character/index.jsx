@@ -4,18 +4,40 @@ import { connect } from 'react-redux'
 import Card from '../../components/card'
 import Loading from '../../components/loading/index'
 import Box from '../../components/box'
+import ErrorContent from '../../components/ErrorContent'
 import './style.scss'
 
 class Character extends React.Component {
+	state = {
+		error : {
+			isError : false,
+			status : ''
+		}
+	}
 	componentDidMount() {
 		let { id } = this.props.match.params
-		this.props.fetchCharacter(id)
+		this.props.fetchCharacter(id).then((res)=>{
+
+		}).catch((err)=>{
+			this.setState({
+				error : {
+					isError: true,
+					status: err.response.data.status
+				}
+			})
+		})
 	}
 	render() {
 		let { character } = this.props
 		let { id } = this.props.match.params
+		let { error } = this.state
+
+		if( error.isError )
+			return <ErrorContent errorStatus={error.status}/>
+
 		if( Object.keys(character).length < 1 )
 			return <Loading />
+
 		return (
 			<React.Fragment>
 				<div className="hero-body character-detail-page">
