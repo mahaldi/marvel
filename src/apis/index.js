@@ -19,6 +19,32 @@ class indexAPI {
 		})
 	}
 
+	_getCharacters({nameStartsWith = null, orderBy = null , limit = 20, offset = 0}) {
+		return this.api.get('/characters',{
+			params : {
+				nameStartsWith,
+				orderBy,
+				limit,
+				offset
+			}
+		})
+	}
+	_getComics({titleStartsWith = null, limit = 20}) {
+		return this.api.get('/comics',{
+			params : {
+				titleStartsWith,
+				limit
+			}
+		})
+	}
+	_getSeries({titleStartsWith = null, limit = 20}) {
+		return this.api.get('/series',{
+			params : {
+				titleStartsWith,
+				limit
+			}
+		})
+	}
 	getCharacter(id){
 		return this.api.get(`/characters/${id}`)
 	}
