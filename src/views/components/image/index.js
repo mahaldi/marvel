@@ -11,7 +11,8 @@ const Image = (props) => {
 Image.defaultProps = {
 	alt: 'mws-image',
 	className: '',
-	size: 'portrait_incredible'
+	size: 'portrait_incredible',
+	ext: 'jpg'
 }
 
 export default Image
