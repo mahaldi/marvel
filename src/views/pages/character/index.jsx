@@ -14,7 +14,7 @@ class Character extends React.Component {
 			status : ''
 		}
 	}
-	componentDidMount() {
+	getCharacter = () => {
 		let { id } = this.props.match.params
 		this.props.fetchCharacter(id).then((res)=>{
 
@@ -26,6 +26,15 @@ class Character extends React.Component {
 				}
 			})
 		})
+	}
+	componentDidMount() {
+		this.getCharacter()
+		this.unlisten = this.props.history.listen((location, action) => {
+			window.location.reload();
+    });
+	}
+	componentWillUnmount(){
+		this.unlisten()
 	}
 	render() {
 		let { character } = this.props
