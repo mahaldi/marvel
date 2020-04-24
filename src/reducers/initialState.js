@@ -4,5 +4,9 @@ export default {
 	isLoading : false,
 	charactersPagination : {},
 	comics: [],
-	series: []
+	series: [],
+	systems: {
+		isLoading: false,
+		isOverlay: false
+	}
 }
