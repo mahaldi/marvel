@@ -9,7 +9,9 @@ class Input extends React.Component {
 		}
 	}
 	static defaultProps = {
-		placeholder : 'Search spider'
+		placeholder: 'Search spider',
+		onFocus: function(){},
+		onClick: function(){}
 	}
 	_onChange = (e) => {
 		this.setState({
@@ -26,6 +28,9 @@ class Input extends React.Component {
 		})
 		this.props.onFocus(isFocus)
 	}
+	_onClick = () => {
+		this.props.onClick(true)
+	}
 	render() {
 		let { value } = this.state
 		let { placeholder } = this.props
@@ -38,7 +43,8 @@ class Input extends React.Component {
 					placeholder={placeholder}
 					onFocus={this._onFocus}
 					onBlur={this._onFocus}
-					onChange={this._onChange}/>
+					onChange={this._onChange}
+					onClick={this._onClick}/>
 			</React.Fragment>
 		)
 	}

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import CardList from '../../components/cardList'
 import './style.scss'
 import Loading from '../../components/loading/index'
+
 class Home extends React.Component {
 	componentDidMount(){
 		if(this.props.characters.length < 1)
