@@ -1,6 +1,6 @@
 import React from 'react'
 import './style.scss'
-import Image from '../image'
+import Image from '../../elements/image'
 
 class Card extends React.Component {
 	constructor(props) {

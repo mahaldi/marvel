@@ -1,6 +1,6 @@
 import React from 'react'
 import './style.scss'
-import Image from '../image/index'
+import Image from '../../elements/image/index'
 import history from '../../../history'
 
 class CardHorizontalMini extends React.Component{
