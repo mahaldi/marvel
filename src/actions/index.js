@@ -26,15 +26,15 @@ export const fetchCharacter = id => async dispatch =>{
 		})
 		return response
 }
-export const fetchComics = characterId => async dispatch => {
-	const response = await IndexAPI.getComics(characterId)
+export const fetchComicsByCharacter = characterId => async dispatch => {
+	const response = await IndexAPI.getComicsByCharacter(characterId)
 	dispatch({
 		type: FETCH_COMICS,
 		payload: response.data.data.results
 	})
 }
-export const fetchSeries = characterId => async dispatch => {
-	const response = await IndexAPI.getSeries(characterId)
+export const fetchSeriesByCharacter = characterId => async dispatch => {
+	const response = await IndexAPI.getSeriesByCharacter(characterId)
 	dispatch({
 		type: FETCH_SERIES,
 		payload: response.data.data.results

@@ -29,13 +29,13 @@ class SearchInput extends React.Component {
 			characters: res.data.data.results
 		})
 	}
-	getComics = async (value) =>{
+	getComicsByCharacter = async (value) =>{
 		let res = await IndexApi._getComics({titleStartsWith: value, limit: 3})
 		this.setState({
 			comics: res.data.data.results
 		})
 	}
-	getSeries = async (value) => {
+	getSeriesByCharacter = async (value) => {
 		let res = await IndexApi._getSeries({titleStartsWith: value, limit: 3})
 		this.setState({
 			series: res.data.data.results
@@ -45,8 +45,8 @@ class SearchInput extends React.Component {
 		this.setState({ value })
 		if(value.length > 0) {
 			this.getCharacters(value)
-			this.getComics(value)
-			this.getSeries(value)
+			this.getComicsByCharacter(value)
+			this.getSeriesByCharacter(value)
 		}
 	}
 	onFocus = (value) => {

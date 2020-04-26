@@ -49,11 +49,11 @@ class indexAPI {
 		return this.api.get(`/characters/${id}`)
 	}
 
-	getComics(characterId) {
+	getComicsByCharacter(characterId) {
 		return this.api.get(`/characters/${characterId}/comics`)
 	}
 
-	getSeries(characterId) {
+	getSeriesByCharacter(characterId) {
 		return this.api.get(`/characters/${characterId}/series`)
 	}
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { fetchComics, fetchSeries } from '../../../actions/index'
+import { fetchComicsByCharacter, fetchSeriesByCharacter } from '../../../actions/index'
 // import PropTypes  from 'prop-types'
 import MiniLoader from '../loader/miniLoader'
 import CardHorizontal from '../cardHorizontal'
@@ -17,9 +17,9 @@ class Box extends React.Component {
 		let { id } = this.props
 
 		if( this.type() === 'comics' )
-			this.props.fetchComics(id)
+			this.props.fetchComicsByCharacter(id)
 		else
-			this.props.fetchSeries(id)
+			this.props.fetchSeriesByCharacter(id)
 	}
 	dataRendered = () => {
 		if( this.type() === 'comics' )
@@ -62,4 +62,4 @@ const mapStateToProps = (state) => {
 		series: state.series
 	}
 }
-export default connect(mapStateToProps, { fetchComics, fetchSeries })(Box)
+export default connect(mapStateToProps, { fetchComicsByCharacter, fetchSeriesByCharacter })(Box)
