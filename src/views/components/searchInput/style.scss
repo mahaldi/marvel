@@ -1,3 +1,32 @@
+@import '../../../assets//scss/mixins.scss';
+
+.search-list-top{
+	display: flex;
+	height: 52px;
+	position: relative;
+	.mws-input{
+		width: 80%;
+		height: 36px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+	}
+	button{
+		width: 52px;
+    height: 100%;
+    display: flex;
+    position: relative;
+    background-color: transparent;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+		border-image: initial;
+		outline: none;
+	}
+}
 .search-list{
 	width: 476px;
 	border: 1px solid rgb(229, 231, 233);
@@ -8,9 +37,19 @@
 	background-color: white;
 	padding: 16px;
 	transition: all .3s ease;
+	@include mq-medium{
+		width: 100%;
+		height: calc(100vh - 38px);
+		top: 0;
+		position: relative;
+	}
 	&.hide{
 		opacity: 0;
 		display: none;
+		@include mq-medium {
+			display: block;
+			opacity: 1;
+		}
 	}
 	.title{
 		color: rgba(49, 53, 59, 0.96);

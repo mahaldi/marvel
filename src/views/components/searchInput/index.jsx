@@ -5,6 +5,11 @@ import CardHorizontalMini from '../cardHorizontalMini'
 import IndexApi from '../../../apis'
 import { setOverlay } from '../../../actions/systems'
 import { connect } from 'react-redux'
+import Drawer from '@material-ui/core/Drawer';
+import MediaQuery from 'react-responsive'
+import WindowSize from '../../../utils/windowResize'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+
 class SearchInput extends React.Component {
 	constructor(props){
 		super(props)
@@ -13,29 +18,27 @@ class SearchInput extends React.Component {
 			characters: [],
 			comics: [],
 			series: [],
-			isFocus: false
+			isFocus: false,
+			isOpen: false
 		}
 	}
 
 	getCharacters = async (value) => {
-		await IndexApi._getCharacters({nameStartsWith: value, limit: 3 }).then((res)=>{
-			this.setState({
-				characters: res.data.data.results
-			})
+		let res = await IndexApi._getCharacters({nameStartsWith: value, limit: 3 })
+		this.setState({
+			characters: res.data.data.results
 		})
 	}
 	getComics = async (value) =>{
-		await IndexApi._getComics({titleStartsWith: value, limit: 3}).then((res)=>{
-			this.setState({
-				comics: res.data.data.results
-			})
+		let res = await IndexApi._getComics({titleStartsWith: value, limit: 3})
+		this.setState({
+			comics: res.data.data.results
 		})
 	}
 	getSeries = async (value) => {
-		await IndexApi._getSeries({titleStartsWith: value, limit: 3}).then((res)=>{
-			this.setState({
-				series: res.data.data.results
-			})
+		let res = await IndexApi._getSeries({titleStartsWith: value, limit: 3})
+		this.setState({
+			series: res.data.data.results
 		})
 	}
 	onSearch = (value) => {
@@ -50,14 +53,18 @@ class SearchInput extends React.Component {
 		this.setState({
 			isFocus: value
 		})
-		this.props.setOverlay(value)
+		if(WindowSize().w >= 1024)
+			this.props.setOverlay(value)
 	}
-	_renderItem = ( payload=null ) =>{
+	_renderItem = ( payload=null, title ) =>{
 		if( !payload ) return null
-		return payload.map((item)=>{
+		return payload.map(( item, idx )=>{
 			return (
-				<div className="search-item" key={item.id}>
-						<CardHorizontalMini data={item}/>
+				<div className="item-section" key={idx}>
+					{ idx === 0 && <p className="title">{ title }</p> }
+					<div className="search-item" key={item.id}>
+							<CardHorizontalMini data={item}/>
+					</div>
 				</div>
 			)
 		})
@@ -70,27 +77,50 @@ class SearchInput extends React.Component {
 	renderSearchList = () => {
 		let { characters, comics, series } = this.state
 		return (
-			<div className={`search-list ${ this.checkingState() ? 'hide':''}`}>
-				<div className="item-section">
-					<p className="title">Characters</p>
-					{ this._renderItem(characters) }
+			<React.Fragment>
+				<div className={`search-list ${ this.checkingState() ? 'hide':''}`}>
+					{ this._renderItem(characters, 'Characters') }
+					{ this._renderItem(comics, 'Comics') }
+					{ this._renderItem(series, 'Series') }
 				</div>
-				<div className="item-section">
-					<p className="title">Comics</p>
-					{ this._renderItem(comics) }
-				</div>
-				<div className="item-section">
-					<p className="title">Series</p>
-					{ this._renderItem(series) }
-				</div>
-			</div>
+			</React.Fragment>
 		)
+	}
+	toggleDrawer = (isOpen) =>  (event) => {
+		if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+		}
+		this.setState({
+			isOpen
+		})
+	}
+	drawerSearchList = () => {
+		return (
+			<Drawer anchor="bottom" height="100%" open={this.state.isOpen} onClose={this.toggleDrawer(false)}>
+				<div className="search-list-top">
+					<button onClick={ () => this.onClick(false) }><ArrowBackIcon /></button>
+					<Input onSearch={this.onSearch} />
+				</div>
+				{ this.renderSearchList() }
+			</Drawer>
+		)
+	}
+	onClick = (val) => {
+		if(WindowSize().w < 1024)
+			this.setState({
+				isOpen: val
+			})
 	}
 	render() {
 		return (
 			<React.Fragment>
-				<Input onSearch={this.onSearch} onFocus={this.onFocus}/>
-				{ this.renderSearchList() }
+				<Input onSearch={this.onSearch} onFocus={this.onFocus} onClick={this.onClick}/>
+				<MediaQuery minDeviceWidth={1024}>
+					{ this.renderSearchList() }
+				</MediaQuery>
+				<MediaQuery maxDeviceWidth={1023}>
+					{ this.drawerSearchList() }
+				</MediaQuery>
 			</React.Fragment>
 		)
 	}
