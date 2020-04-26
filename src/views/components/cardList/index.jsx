@@ -36,8 +36,9 @@ class CardList extends React.Component {
 			<div className="card-list">
 				{
 					data.map((item) => {
+						let middleUrl = item.name ? 'character': item.comics && item.title ? 'comic': 'series'
 						return(
-							<Link to={ '/' + item.id} key={item.id}>
+							<Link to={ '/' + middleUrl + '/' + item.id} key={item.id}>
 								<Card data={item} />
 							</Link>
 						)

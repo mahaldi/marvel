@@ -5,13 +5,17 @@ import history from '../../../history'
 
 class CardHorizontalMini extends React.Component{
 	redirect = () => {
-		history.push(`/${this.props.data.id}`)
+		let { data } = this.props
+		let middleUrl = data.name ? 'character': data.series && data.title ? 'comic': 'series'
+
+		history.push(`/${middleUrl}/${data.id}`)
 	}
 	render() {
 		let { data } = this.props
+		let middleUrl = data.name ? 'character': data.series && data.title ? 'comic': 'series'
 		return (
 			<React.Fragment>
-				<a className="mws-card-mini-horizontal" href={`/${this.props.data.id}`} onMouseDown={this.redirect}>
+				<a className="mws-card-mini-horizontal" href={`/${middleUrl}/${this.props.data.id}`} onMouseDown={this.redirect}>
 					<div className="mws-img">
 						<Image src={data.thumbnail.path} size="portrait_small" ext={data.thumbnail.extension}/>
 					</div>
