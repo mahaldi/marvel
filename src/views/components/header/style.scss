@@ -1,17 +1,37 @@
 @import '../../../assets/scss/variables.scss';
+@import '../../../assets//scss/mixins.scss';
 
 .navbar-mws{
 	border-bottom: 1px solid hsl(0, 0%, 86%);
+	@include mq-medium{
+		.container{
+			display: flex;
+			.navbar-brand{
+				width: 20%;
+			}
+			.navbar-menu{
+				width: 80%;
+				box-shadow: none;
+				display: block;
+			}
+		}
+	}
 	.navbar-start{
 		&.middle{
 			margin: 0 auto;
 			width: 500px;
+			@include mq-medium{
+				width: 100%;
+			}
 			.navbar-item{
 				width: 100%;
 			}
 		}
 	}
 	.navbar-end{
+		@include mq-medium {
+			display: none;
+		}
 		margin-left: 0;
 	}
 }
