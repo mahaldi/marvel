@@ -2,7 +2,9 @@ import React from 'react'
 import './style.scss'
 import Input from '../../elements/input'
 import CardHorizontalMini from '../cardHorizontalMini'
-import IndexApi from '../../../apis'
+import CharactersAPI from '../../../apis/characters'
+import ComicsAPI from '../../../apis/comics'
+import SeriesAPI from '../../../apis/series'
 import { setOverlay } from '../../../actions/systems'
 import { connect } from 'react-redux'
 import Drawer from '@material-ui/core/Drawer';
@@ -24,19 +26,19 @@ class SearchInput extends React.Component {
 	}
 
 	getCharacters = async (value) => {
-		let res = await IndexApi._getCharacters({nameStartsWith: value, limit: 3 })
+		let res = await CharactersAPI.getCharacters({nameStartsWith: value, limit: 3 })
 		this.setState({
 			characters: res.data.data.results
 		})
 	}
 	getComicsByCharacter = async (value) =>{
-		let res = await IndexApi._getComics({titleStartsWith: value, limit: 3})
+		let res = await ComicsAPI.getComics({titleStartsWith: value, limit: 3})
 		this.setState({
 			comics: res.data.data.results
 		})
 	}
 	getSeriesByCharacter = async (value) => {
-		let res = await IndexApi._getSeries({titleStartsWith: value, limit: 3})
+		let res = await SeriesAPI.getSeries({titleStartsWith: value, limit: 3})
 		this.setState({
 			series: res.data.data.results
 		})
