@@ -44,12 +44,13 @@ class Box extends React.Component {
 	render() {
 		if( this.dataRendered().length < 1 )
 			return <MiniLoader />
+		let data = this.dataRendered()
 		return (
 			<React.Fragment>
 				<div className="box">
 
 					{
-						this.dataRendered().map((item)=>{
+						data.map((item)=>{
 							return (
 								<div key={item.id}>
 									<CardHorizontal data={item}/>

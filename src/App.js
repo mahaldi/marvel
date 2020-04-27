@@ -2,7 +2,7 @@ import React from 'react';
 import './assets/scss/index.scss';
 import Header from './views/components/header'
 import Home from './views/pages/home'
-import Character from './views/pages/character'
+import Detail from './views/pages/detail'
 import NotFoundPage from './views/pages/NotFoundPage'
 import { Router, Route, Switch } from 'react-router-dom';
 import history from './history'
@@ -20,7 +20,7 @@ class App extends React.Component {
             <Switch>
                 <Route path="/" exact component={Home}/>
 								<Route path="/:explore" exact component={Explore}/>
-                <Route path="/:type/:id" exact component={Character}/>
+                <Route path="/:type/:id" exact component={Detail}/>
                 <Route path="*" component={NotFoundPage}/>
             </Switch>
           </section>
