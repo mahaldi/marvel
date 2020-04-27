@@ -1,5 +1,7 @@
 import React from 'react'
-import { fetchCharacter, fetchCommicById, fetchSeriesById } from '../../../actions/index'
+import {fetchCharacter} from '../../../actions/characters'
+import {fetchSeriesById} from '../../../actions/series'
+import {fetchCommicById} from '../../../actions/comics'
 import { connect } from 'react-redux'
 import Card from '../../components/card'
 import Loading from '../../components/loading/index'

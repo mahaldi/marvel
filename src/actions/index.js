@@ -1,8 +1,11 @@
 import { FETCH_CHARACTERS, FETCH_CHARACTER, CHARACTERS_PAGINATION, FETCH_COMICS, FETCH_SERIES, FETCH_EXPLORE, FETCH_DETAIL } from './types'
-import IndexAPI from '../apis'
+// import IndexAPI from '../apis'
+import CharactersAPI from '../apis/characters'
+import ComicsAPI  from '../apis/comics'
+import SeriesAPI from '../apis/series'
 
 export const fetchCharacters = ({nameStartsWith = null, orderBy = null , limit = 20, offset = 0}) => async dispatch =>{
-	const response = await IndexAPI._getCharacters({nameStartsWith, orderBy, limit, offset})
+	const response = await CharactersAPI.getCharacters({nameStartsWith, orderBy, limit, offset})
 
 	dispatch({
 			type: CHARACTERS_PAGINATION,
@@ -19,7 +22,7 @@ export const fetchCharacters = ({nameStartsWith = null, orderBy = null , limit =
 	return response.data.data.results
 }
 export const fetchCharacter = id => async dispatch =>{
-    const response = await IndexAPI.getCharacter(id)
+    const response = await CharactersAPI.getCharacterDetail(id)
     dispatch({
         type: FETCH_CHARACTER,
         payload: response.data.data.results[0]
@@ -31,15 +34,26 @@ export const fetchCharacter = id => async dispatch =>{
 		return response
 }
 export const fetchComicsByCharacter = characterId => async dispatch => {
-	const response = await IndexAPI.getComicsByCharacter(characterId)
+	const response = await CharactersAPI.getComicsByCharacter(characterId)
 	dispatch({
 		type: FETCH_COMICS,
 		payload: response.data.data.results
 	})
 	return response
 }
+export const fetchSeriesByCharacter = characterId => async dispatch => {
+	const response = await CharactersAPI.getSeriesByCharacter(characterId)
+
+	dispatch({
+		type: FETCH_SERIES,
+		payload: response.data.data.results
+	})
+	return response
+}
+
+
 export const fetchComics = ({limit= 20, offset = 20}) => async dispatch => {
-	const response = await IndexAPI._getComics({limit, offset})
+	const response = await ComicsAPI.getComics({limit, offset})
 	dispatch({
 			type: CHARACTERS_PAGINATION,
 			payload: response.data.data
@@ -55,7 +69,7 @@ export const fetchComics = ({limit= 20, offset = 20}) => async dispatch => {
 	return response.data.data.results
 }
 export const fetchCommicById = id => async dispatch => {
-	const response = await IndexAPI.getComicById(id)
+	const response = await ComicsAPI.getComicDetail(id)
 
 	dispatch({
 		type: FETCH_DETAIL,
@@ -63,8 +77,18 @@ export const fetchCommicById = id => async dispatch => {
 	})
 	return response
 }
+export const fetchCharacterByComicId = id => async dispatch => {
+	const response = await ComicsAPI.getCharactersByComicId(id)
+
+	dispatch({
+		type: FETCH_CHARACTERS,
+		payload: response.data.data.results
+	})
+}
+
+
 export const fetchSeries = ({limit= 20, offset = 20}) => async dispatch => {
-	const response = await IndexAPI._getSeries({limit, offset})
+	const response = await SeriesAPI.getSeries({limit, offset})
 	dispatch({
 			type: CHARACTERS_PAGINATION,
 			payload: response.data.data
@@ -80,7 +104,7 @@ export const fetchSeries = ({limit= 20, offset = 20}) => async dispatch => {
 	return response.data.data.results
 }
 export const fetchSeriesById = id => async dispatch => {
-	const response = await IndexAPI.getSeriesById(id)
+	const response = await SeriesAPI.getSeriesDetail(id)
 
 	dispatch({
 		type: FETCH_DETAIL,
@@ -88,25 +112,8 @@ export const fetchSeriesById = id => async dispatch => {
 	})
 	return response
 }
-export const fetchSeriesByCharacter = characterId => async dispatch => {
-	const response = await IndexAPI.getSeriesByCharacter(characterId)
-
-	dispatch({
-		type: FETCH_SERIES,
-		payload: response.data.data.results
-	})
-	return response
-}
-export const fetchCharacterByComicId = id => async dispatch => {
-	const response = await IndexAPI.getCharactersByComicId(id)
-
-	dispatch({
-		type: FETCH_CHARACTERS,
-		payload: response.data.data.results
-	})
-}
 export const fetchCharactersBySeriesId = id => async dispatch => {
-	const response = await IndexAPI.getCharactersBySeriesId(id)
+	const response = await SeriesAPI.getCharactersBySeriesId(id)
 
 	dispatch({
 		type: FETCH_CHARACTERS,
@@ -114,7 +121,7 @@ export const fetchCharactersBySeriesId = id => async dispatch => {
 	})
 }
 export const fetchComicsBySeriesId = id => async dispatch => {
-	const response = await IndexAPI.getComicsBySeriesId(id)
+	const response = await SeriesAPI.getComicsBySeriesId(id)
 
 	dispatch({
 		type: FETCH_COMICS,

@@ -1,5 +1,5 @@
 import React from 'react'
-import { fetchCharacters } from '../../../actions'
+import { fetchCharacters } from '../../../actions/characters'
 import { connect } from 'react-redux';
 import CardList from '../../components/cardList'
 import './style.scss'

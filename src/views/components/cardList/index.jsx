@@ -2,7 +2,9 @@ import React from 'react'
 import Card from '../card'
 import { Link } from 'react-router-dom';
 import './style.scss'
-import { fetchCharacters, fetchComics, fetchSeries } from '../../../actions/index'
+import {fetchCharacters} from '../../../actions/characters'
+import {fetchComics} from '../../../actions/comics'
+import {fetchSeries} from '../../../actions/series'
 import { connect } from 'react-redux';
 import MiniLoader from '../loader/miniLoader'
 

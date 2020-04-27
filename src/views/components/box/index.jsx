@@ -1,12 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import {
-	fetchComicsByCharacter,
 	fetchSeriesByCharacter,
-	fetchCharacterByComicId,
-	fetchCharactersBySeriesId,
-	fetchComicsBySeriesId
-} from '../../../actions/index'
+	fetchComicsByCharacter
+} from '../../../actions/characters'
+import { fetchCharacterByComicId } from '../../../actions/comics'
+import { fetchCharactersBySeriesId, fetchComicsBySeriesId } from '../../../actions/series'
 
 // import PropTypes  from 'prop-types'
 import MiniLoader from '../loader/miniLoader'
