@@ -4,7 +4,7 @@ import initialState from './initialState'
 export default ( state=initialState.comics, action ) => {
 	switch(action.type) {
 		case FETCH_COMICS:
-			return state.concat(action.payload)
+			return action.payload
 		default:
 			return state
 	}
