@@ -17,7 +17,7 @@ class CardHorizontal extends React.Component {
 								<p>Title :</p>
 							</div>
 							<div className="info-content">
-								<p>{data.title || 'No Title'}</p>
+								<p>{data.name || data.title || 'No Title'}</p>
 							</div>
 						</div>
 						<div className="item-info">
@@ -41,13 +41,7 @@ class CardHorizontal extends React.Component {
 								<p>More Detail :</p>
 							</div>
 							<div className="info-content urls">
-								{
-										data.urls.map( item =>{
-											return (
-												<a href={item.url} key={item.url}>{item.url}</a>
-											)
-										})
-									}
+								<a href={data.urls[0].url} >{data.urls[0].url}</a>
 							</div>
 						</div>
 					</div>

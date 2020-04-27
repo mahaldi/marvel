@@ -8,7 +8,7 @@ import Loading from '../../components/loading/index'
 class Home extends React.Component {
 	componentDidMount(){
 		if(this.props.characters.length < 1)
-			this.props.fetchCharacters()
+			this.props.fetchCharacters({})
 	}
 	render() {
 		let { characters } = this.props

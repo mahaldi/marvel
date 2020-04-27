@@ -29,19 +29,21 @@ class indexAPI {
 			}
 		})
 	}
-	_getComics({titleStartsWith = null, limit = 20}) {
+	_getComics({titleStartsWith = null, limit = 20, offset = 0}) {
 		return this.api.get('/comics',{
 			params : {
 				titleStartsWith,
-				limit
+				limit,
+				offset
 			}
 		})
 	}
-	_getSeries({titleStartsWith = null, limit = 20}) {
+	_getSeries({titleStartsWith = null, limit = 20, offset = 0}) {
 		return this.api.get('/series',{
 			params : {
 				titleStartsWith,
-				limit
+				limit,
+				offset
 			}
 		})
 	}
@@ -51,6 +53,22 @@ class indexAPI {
 
 	getComicsByCharacter(characterId) {
 		return this.api.get(`/characters/${characterId}/comics`)
+	}
+
+	getCharactersByComicId(id) {
+		return this.api.get(`/comics/${id}/characters`)
+	}
+	getCharactersBySeriesId(id) {
+		return this.api.get(`/series/${id}/characters`)
+	}
+	getComicById(id) {
+		return this.api.get(`/comics/${id}`)
+	}
+	getComicsBySeriesId(id) {
+		return this.api.get(`/series/${id}/comics`)
+	}
+	getSeriesById(id) {
+		return this.api.get(`/series/${id}`)
 	}
 
 	getSeriesByCharacter(characterId) {

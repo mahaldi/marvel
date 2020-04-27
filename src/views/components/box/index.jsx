@@ -1,6 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { fetchComicsByCharacter, fetchSeriesByCharacter } from '../../../actions/index'
+import {
+	fetchComicsByCharacter,
+	fetchSeriesByCharacter,
+	fetchCharacterByComicId,
+	fetchCharactersBySeriesId,
+	fetchComicsBySeriesId
+} from '../../../actions/index'
+
 // import PropTypes  from 'prop-types'
 import MiniLoader from '../loader/miniLoader'
 import CardHorizontal from '../cardHorizontal'
@@ -14,30 +21,32 @@ class Box extends React.Component {
 		return type
 	}
 	componentDidMount() {
-		let { id } = this.props
+		let { id, by } = this.props
 
-		if( this.type() === 'comics' )
+		if( this.type() === 'comics' && by === 'character')
 			this.props.fetchComicsByCharacter(id)
+		else if( this.type() === 'characters' && by === 'comic')
+			this.props.fetchCharacterByComicId(id)
+		else if( this.type() === 'comics' && by === 'series')
+			this.props.fetchComicsBySeriesId(id)
+		else if( this.type() === 'characters' && by === 'series')
+			this.props.fetchCharactersBySeriesId(id)
 		else
 			this.props.fetchSeriesByCharacter(id)
 	}
 	dataRendered = () => {
 		if( this.type() === 'comics' )
 			return this.props.comics
+		else if ( this.type() === 'characters')
+			return this.props.characters
 		return this.props.series
 	}
 	render() {
+		if( this.dataRendered().length < 1 )
+			return <MiniLoader />
 		return (
 			<React.Fragment>
 				<div className="box">
-
-					{(
-						()=>{
-							if( this.dataRendered().length < 1 ) {
-								return <MiniLoader />
-							}
-						}
-					)()}
 
 					{
 						this.dataRendered().map((item)=>{
@@ -59,7 +68,13 @@ class Box extends React.Component {
 const mapStateToProps = (state) => {
 	return {
 		comics: state.comics,
-		series: state.series
+		series: state.series,
+		characters: state.characters
 	}
 }
-export default connect(mapStateToProps, { fetchComicsByCharacter, fetchSeriesByCharacter })(Box)
+export default connect(mapStateToProps, {
+	fetchComicsByCharacter,
+	fetchSeriesByCharacter,
+	fetchCharacterByComicId,
+	fetchCharactersBySeriesId,
+	fetchComicsBySeriesId })(Box)

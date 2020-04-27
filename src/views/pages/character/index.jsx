@@ -1,5 +1,5 @@
 import React from 'react'
-import { fetchCharacter } from '../../../actions/index'
+import { fetchCharacter, fetchCommicById, fetchSeriesById } from '../../../actions/index'
 import { connect } from 'react-redux'
 import Card from '../../components/card'
 import Loading from '../../components/loading/index'
@@ -14,11 +14,24 @@ class Character extends React.Component {
 			status : ''
 		}
 	}
-	getCharacter = () => {
-		let { id } = this.props.match.params
-		this.props.fetchCharacter(id).then((res)=>{
+	getDataDetail = async () => {
+		let { id, type } = this.props.match.params
+		let response
+		if( type === 'character' ){
+			response = await this.props.fetchCharacter(id)
+		} else if ( type === 'comic' ){
+			response = await this.props.fetchCommicById(id)
+		} else if (type === 'series') {
+			response = await this.props.fetchSeriesById(id)
+		} else {
+			this.props.history.push('/')
+			return window.location.reload()
+		}
 
-		}).catch((err)=>{
+		return response
+	}
+	componentDidMount() {
+		this.getDataDetail().then((res)=>{}).catch((err)=>{
 			this.setState({
 				error : {
 					isError: true,
@@ -26,10 +39,9 @@ class Character extends React.Component {
 				}
 			})
 		})
-	}
-	componentDidMount() {
-		this.getCharacter()
+
 		this.unlisten = this.props.history.listen((location, action) => {
+			//kalau dari card mini horizontal ke halaman ini gk kepanggil lg endpointnya
 			window.location.reload();
     });
 	}
@@ -37,14 +49,13 @@ class Character extends React.Component {
 		this.unlisten()
 	}
 	render() {
-		let { character } = this.props
-		let { id } = this.props.match.params
+		let { detail } = this.props
+		let { id, type } = this.props.match.params
 		let { error } = this.state
-
 		if( error.isError )
 			return <ErrorContent errorStatus={error.status}/>
 
-		if( Object.keys(character).length < 1 )
+		if( Object.keys(detail).length < 1 )
 			return <Loading />
 
 		return (
@@ -53,13 +64,29 @@ class Character extends React.Component {
 					<div className="container has-text-centered">
 						<div className="columns">
 							<div className="column is-one-fifth">
-								<Card data={character}/>
+								<Card data={detail}/>
 							</div>
 							<div className="column">
-								<p className="title">Comics</p>
-								<Box type="comics" id={id} />
-								<p className="title">Series</p>
-								<Box type="series" id={id} />
+								{ ( type === 'character' || type === 'series') &&
+									<React.Fragment>
+										<p className="title">Comics</p>
+										<Box type="comics" by={type} id={id} />
+									</React.Fragment>
+								}
+								{
+									( type === 'comic' || type === 'series') &&
+									<React.Fragment>
+										<p className="title">Characters</p>
+										<Box type="characters" by={type} id={id} />
+									</React.Fragment>
+								}
+								{
+									(type !== 'comic' && type !== 'series') &&
+									<React.Fragment>
+										<p className="title">Series</p>
+										<Box type="series" by={type} id={id} />
+									</React.Fragment>
+								}
 							</div>
 						</div>
 					</div>
@@ -70,7 +97,7 @@ class Character extends React.Component {
 }
 const mapStateToProps = (state) => {
 	return {
-		character: state.character
+		detail: state.detail
 	}
 }
-export default connect(mapStateToProps, { fetchCharacter })(Character)
+export default connect(mapStateToProps, { fetchCharacter, fetchSeriesById, fetchCommicById })(Character)

@@ -1,9 +1,9 @@
-import { FETCH_COMICS } from '../actions/types'
+import { FETCH_EXPLORE } from '../actions/types'
 import initialState from './initialState'
 
-export default ( state=initialState.comics, action ) => {
+export default ( state=initialState.explore, action ) => {
 	switch(action.type) {
-		case FETCH_COMICS:
+		case FETCH_EXPLORE:
 			return state.concat(action.payload)
 		default:
 			return state

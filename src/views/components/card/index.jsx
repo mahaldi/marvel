@@ -1,6 +1,7 @@
 import React from 'react'
 import './style.scss'
 import Image from '../../elements/image'
+import { cardType } from '../../../utils/helper'
 
 class Card extends React.Component {
 	constructor(props) {
@@ -11,7 +12,7 @@ class Card extends React.Component {
 		this.imgRef = React.createRef()
 	}
 	componentDidMount() {
-		// this.imgRef.current.addEventListener('load', this.setSpan)
+
 	}
 	setSpan = () => {
 		const height = this.imgRef.current.clientHeight
@@ -32,9 +33,9 @@ class Card extends React.Component {
 						</div>
 						<div className="card-content">
 							<ul>
-								<li>Name : <span> {data.name} </span></li>
-								<li>Comics : <span> {data.comics.available} </span></li>
-								<li>Series : <span> {data.series.available} </span></li>
+								<li>Name : <span> {data.name || data.title} </span></li>
+								{ (cardType(data) === 'series' || cardType(data) === 'character') && <li>Comics : <span> {data.comics.available} </span></li>}
+								{ (cardType(data) === 'comic' || cardType(data) === 'character') &&  <li>Series : <span> {data.series.available} </span></li>}
 							</ul>
 						</div>
 					</div>
