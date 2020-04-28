@@ -45,7 +45,7 @@ class CardList extends React.Component {
 			<div className="card-list">
 				{
 					data.map((item) => {
-						let middleUrl = type
+						let middleUrl = type.slice(0,-1)
 						return(
 							<Link to={ '/' + middleUrl + '/' + item.id} key={item.id}>
 								<Card data={item} />
