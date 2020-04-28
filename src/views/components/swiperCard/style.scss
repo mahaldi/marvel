@@ -1,0 +1,26 @@
+@import '../../../assets/scss/mixins.scss';
+
+.mws-swiper-card{
+	.swiper-card-head{
+		display: flex;
+		margin-bottom: 16px;
+		.right{
+			margin-left: auto;
+			margin-right: 16px;
+			a{
+				line-height: 36px;
+			}
+		}
+	}
+	.title{
+		text-align: left;
+		margin-left: 16px;
+	}
+	.card-item{
+		max-width: 216px;
+		margin-bottom: 16px;
+		.card{
+			margin: 0;
+		}
+	}
+}
