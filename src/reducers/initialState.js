@@ -1,8 +1,31 @@
 export default {
-	characters : [],
+	characters : {
+		items: [],
+		loading: false,
+		error: null
+	},
 	character : {},
+	detail: {},
 	isLoading : false,
 	charactersPagination : {},
-	comics: [],
-	series: []
+	comics: {
+		items: [],
+		loading: false,
+		error: null
+	},
+	series: {
+		items: [],
+		loading: false,
+		error: null
+	},
+	explore: {
+		items: [],
+		loading: false,
+		error: null,
+		pagination: {}
+	},
+	systems: {
+		isLoading: false,
+		isOverlay: false
+	}
 }

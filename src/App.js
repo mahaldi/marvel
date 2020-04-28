@@ -2,22 +2,25 @@ import React from 'react';
 import './assets/scss/index.scss';
 import Header from './views/components/header'
 import Home from './views/pages/home'
-import Character from './views/pages/character'
+import Detail from './views/pages/detail'
 import NotFoundPage from './views/pages/NotFoundPage'
 import { Router, Route, Switch } from 'react-router-dom';
-import { createBrowserHistory } from 'history'
-const history = createBrowserHistory();
+import history from './history'
+import Overlay from './views/components/overlay'
+import Explore from './views/pages/explore'
 
 class App extends React.Component {
   render(){
     return (
       <React.Fragment>
         <Router history={history}>
-          <Header />
+					<Route path="*" component={Header}/>
+					<Overlay />
           <section className="container marvel">
             <Switch>
                 <Route path="/" exact component={Home}/>
-                <Route path="/:id" exact component={Character}/>
+								<Route path="/:explore" exact component={Explore}/>
+                <Route path="/:type/:id" exact component={Detail}/>
                 <Route path="*" component={NotFoundPage}/>
             </Switch>
           </section>

@@ -1,13 +1,16 @@
 import React from 'react'
-import Image from '../image'
+import Image from '../../elements/image'
 import './style.scss'
+import { Link } from 'react-router-dom';
+import { cardType } from '../../../utils/helper'
+
 class CardHorizontal extends React.Component {
 
 	render() {
 		let { data } = this.props
 		return (
 			<React.Fragment>
-				<div className="mws-card-horizontal columns">
+				<Link className="mws-card-horizontal columns" to={'/' + cardType(data) + '/' + data.id}>
 					<div className="column is-one-quarter">
 						<Image src={data.thumbnail.path} ext={data.thumbnail.extension} alt={data.title} />
 					</div>
@@ -17,7 +20,7 @@ class CardHorizontal extends React.Component {
 								<p>Title :</p>
 							</div>
 							<div className="info-content">
-								<p>{data.title || 'No Title'}</p>
+								<p>{data.name || data.title || 'No Title'}</p>
 							</div>
 						</div>
 						<div className="item-info">
@@ -41,17 +44,11 @@ class CardHorizontal extends React.Component {
 								<p>More Detail :</p>
 							</div>
 							<div className="info-content urls">
-								{
-										data.urls.map( item =>{
-											return (
-												<a href={item.url} key={item.url}>{item.url}</a>
-											)
-										})
-									}
+								<a href={data.urls[0].url} >{data.urls[0].url}</a>
 							</div>
 						</div>
 					</div>
-				</div>
+				</Link>
 			</React.Fragment>
 		)
 	}

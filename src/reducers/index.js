@@ -1,13 +1,18 @@
 import { combineReducers } from 'redux'
-import { characterList, character, characterListPagination } from './characters'
+import characters from './characters'
 import comics from './comics'
 import series from './series'
-const indexReducer = combineReducers({
-	characters: characterList,
-	character: character,
-	pagination: characterListPagination ,
+import systems from './systems'
+import explore from './explore'
+import detail from './detail'
+
+const reducer = combineReducers({
+	characters,
 	comics,
-	series
+	series,
+	systems,
+	explore,
+	detail
 })
 
-export default indexReducer
+export default reducer

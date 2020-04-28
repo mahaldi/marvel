@@ -1,32 +1,19 @@
 @import '../../../assets/scss/mixins.scss';
-
-.hero-body{
-    // .mws-list{
-    //     display: grid;
-    //     grid-template-columns: repeat(auto-fill, minmax(216px, 1fr));
-    //     grid-gap: 0 10px;
-    //     grid-auto-rows: 10px;
-    //     .card-item{
-    //         width: 216px;
-    //         grid-row-end: span 2;
-    //         @include mq-small-only{
-    //             width: 100%;
-    //             margin: 0;
-    //             margin-bottom: 16px;
-    //         }
-    //     }
-    // }
+.marvel {
+	.mws-marvel-home{
+		@include mq-medium {
+			padding-right: 16px;
+			padding-left: 16px;
+			overflow: visible;
+		}
+		.container {
+			@include mq-medium {
+				.mws-swiper-card{
+					margin-left: -16px;
+					overflow: visible;
+					margin-right: -16px;
+				}
+			}
+		}
+	}
 }
-
-.image-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(216px, 1fr));
-    grid-gap: 0 10px;
-    grid-auto-rows: 10px;
-}
-  
-.image-list img {
-    width: 216px;
-    grid-row-end: span 2;
-}
-  
