@@ -21,7 +21,7 @@ class Character extends React.Component {
 			let { id, type } = this.props.match.params
 
 			if( type === 'character' ){
-				this.props.fetchCharacter(id)
+				await this.props.fetchCharacter(id)
 			} else if ( type === 'comic' ){
 				this.props.fetchCommicById(id)
 			} else if (type === 'series') {
@@ -30,12 +30,11 @@ class Character extends React.Component {
 				this.props.history.push('/')
 				return window.location.reload()
 			}
-
 		}catch(err){
 			this.setState({
 				error : {
 					isError: true,
-					status: err.response.data.status
+					status: err.response.data
 				}
 			})
 		}
@@ -56,7 +55,7 @@ class Character extends React.Component {
 		let { id, type } = this.props.match.params
 		let { error } = this.state
 		if( error.isError )
-			return <ErrorContent errorStatus={error.status}/>
+			return <ErrorContent error={error.status}/>
 
 		if( Object.keys(detail).length < 1 )
 			return <Loading />
