@@ -83,10 +83,10 @@ class Header extends React.Component {
 					</nav>
 					<div className="mws-bottom-navbar">
 						<BottomNavigation showLabels>
-							<BottomNavigationAction label="Home" icon={ <HomeIcon /> } />
+							<BottomNavigationAction label="Home" component={ Link } to="/" icon={ <HomeIcon /> } />
 							<BottomNavigationAction label="Characters" component={ Link } to="/characters" icon={ SuperHeroIcon } />
-							<BottomNavigationAction label="Comics" icon={ ComicIcon } />
-							<BottomNavigationAction label="Series" icon={ SeriesIcon } />
+							<BottomNavigationAction label="Comics" component={ Link } to="/comics" icon={ ComicIcon } />
+							<BottomNavigationAction label="Series" component={ Link } to="/series" icon={ SeriesIcon } />
 						</BottomNavigation>
 					</div>
 			</React.Fragment>
