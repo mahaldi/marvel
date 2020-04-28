@@ -1,24 +1,32 @@
 import React from 'react'
 import { fetchCharacters } from '../../../actions/characters'
+import { fetchComics } from '../../../actions/comics'
+import { fetchSeries } from '../../../actions/series'
 import { connect } from 'react-redux';
-import CardList from '../../components/cardList'
 import './style.scss'
 import Loading from '../../components/loading/index'
 import ContainerPage from '../../components/containerPages'
+import Footer from '../../components/footer'
+import SwiperCard from '../../components/swiperCard'
 
 class Home extends React.Component {
+
 	componentDidMount(){
-		if(this.props.characters.length < 1)
-			this.props.fetchCharacters({})
+		this.props.fetchCharacters({})
+		this.props.fetchComics({})
+		this.props.fetchSeries({})
 	}
 	render() {
-		let { characters } = this.props
-		if( characters.length < 1 )
+		let { characters, comics, series } = this.props
+		if( characters.loading )
 			return <Loading />
 		return (
 			<React.Fragment>
-				<ContainerPage className="testing">
-					<CardList data={characters}/>
+				<ContainerPage className="mws-marvel-home">
+					<SwiperCard data={characters.items} type="Characters" loading={characters.loading} error={characters.error} />
+					<SwiperCard data={comics.items} type="Comics" loading={comics.loading} error={characters.error} />
+					<SwiperCard data={series.items} type="Series" loading={series.loading} error={characters.error} />
+					<Footer />
 				</ContainerPage>
 			</React.Fragment>
 		)
@@ -26,7 +34,9 @@ class Home extends React.Component {
 }
 const mapStateToProps = (state) =>{
 	return {
-		characters : state.explore.items
+		characters : state.characters,
+		comics: state.comics,
+		series: state.series
 	}
 }
-export default connect( mapStateToProps, {fetchCharacters})(Home)
+export default connect( mapStateToProps, { fetchCharacters, fetchComics, fetchSeries })(Home)
