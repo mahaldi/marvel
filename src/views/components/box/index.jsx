@@ -41,7 +41,7 @@ class Box extends React.Component {
 		return this.props.series
 	}
 	render() {
-		if( this.dataRendered().length < 1 )
+		if( this.dataRendered().items.length < 1 )
 			return <MiniLoader />
 		let data = this.dataRendered().items
 		return (
