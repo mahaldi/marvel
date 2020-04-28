@@ -1,32 +1,33 @@
 import {
 	FETCH_CHARACTERS,
 	FETCH_CHARACTER,
-	CHARACTERS_PAGINATION,
 	FETCH_COMICS,
 	FETCH_SERIES,
-	FETCH_EXPLORE,
-	FETCH_DETAIL
+	FETCH_DETAIL,
+	FETCH_CHARACTERS_BEGIN,
+	FETCH_CHARACTERS_FAILURE
 } from './types'
 
 import CharactersAPI from '../apis/characters'
 
 
-export const fetchCharacters = ({nameStartsWith = null, orderBy = null , limit = 20, offset = 0}) => async dispatch =>{
-	const response = await CharactersAPI.getCharacters({nameStartsWith, orderBy, limit, offset})
+export const fetchCharacters = (params={}) => async dispatch =>{
 
-	dispatch({
-			type: CHARACTERS_PAGINATION,
-			payload: response.data.data
-	})
-	dispatch({
+	try{
+		dispatch({type: FETCH_CHARACTERS_BEGIN})
+
+		const response = await CharactersAPI.getCharacters(params)
+
+		dispatch({
 			type: FETCH_CHARACTERS,
 			payload: response.data.data.results
-	})
-	dispatch({
-			type: FETCH_EXPLORE,
-			payload: response.data.data.results
-	})
-	return response.data.data.results
+		})
+
+		return response
+	}catch(err){
+		dispatch({type: FETCH_CHARACTERS_FAILURE, payload: err.response})
+		return err
+	}
 }
 export const fetchCharacter = id => async dispatch =>{
     const response = await CharactersAPI.getCharacterDetail(id)

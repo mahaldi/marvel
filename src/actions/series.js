@@ -1,29 +1,26 @@
 import {
 	FETCH_CHARACTERS,
-	CHARACTERS_PAGINATION,
 	FETCH_COMICS,
 	FETCH_SERIES,
-	FETCH_EXPLORE,
-	FETCH_DETAIL
+	FETCH_DETAIL,
+	FETCH_SERIES_BEGIN,
+	FETCH_SERIES_FAILURE
 } from './types'
 
 import SeriesAPI from '../apis/series'
 
 export const fetchSeries = ({limit= 20, offset = 20}) => async dispatch => {
-	const response = await SeriesAPI.getSeries({limit, offset})
-	dispatch({
-			type: CHARACTERS_PAGINATION,
-			payload: response.data.data
-	})
-	dispatch({
-		type: FETCH_SERIES,
-		payload: response.data.data.results
-	})
-	dispatch({
-			type: FETCH_EXPLORE,
+	try{
+		dispatch({type: FETCH_SERIES_BEGIN})
+		const response = await SeriesAPI.getSeries({limit, offset})
+		dispatch({
+			type: FETCH_SERIES,
 			payload: response.data.data.results
-	})
-	return response.data.data.results
+		})
+		return response
+	}catch(err){
+		dispatch({type: FETCH_SERIES_FAILURE, payload: err.response})
+	}
 }
 export const fetchSeriesById = id => async dispatch => {
 	const response = await SeriesAPI.getSeriesDetail(id)
