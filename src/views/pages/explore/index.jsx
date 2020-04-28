@@ -44,7 +44,7 @@ class Explore extends React.Component{
 		return (
 			<React.Fragment>
 				<ContainerPage>
-					<CardList data={explore.items} type={params.explore.slice(0,-1)} />
+					<CardList data={explore.items} type={params.explore} />
 				</ContainerPage>
 			</React.Fragment>
 		)
