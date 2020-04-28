@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import CardList from '../../components/cardList'
 import './style.scss'
 import Loading from '../../components/loading/index'
+import ContainerPage from '../../components/containerPages'
 
 class Home extends React.Component {
 	componentDidMount(){
@@ -16,11 +17,9 @@ class Home extends React.Component {
 			return <Loading />
 		return (
 			<React.Fragment>
-				<div className="hero-body">
-					<div className="container has-text-centered">
-						<CardList data={characters}/>
-					</div>
-				</div>
+				<ContainerPage className="testing">
+					<CardList data={characters}/>
+				</ContainerPage>
 			</React.Fragment>
 		)
 	}

@@ -4,6 +4,29 @@ import Logo from '../../../assets/static/marvel.svg'
 import SearchInput from '../../components/searchInput'
 import { Link } from 'react-router-dom'
 
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import HomeIcon from '@material-ui/icons/Home';
+import Comic from '../../../assets/static/comic.svg'
+import SuperHero from '../../../assets/static/superhero.svg'
+import Series from '../../../assets/static/series.png'
+import Icon from "@material-ui/core/Icon";
+
+const ComicIcon = (
+	<Icon>
+		<img src={Comic} alt="comic"/>
+	</Icon>
+)
+const SuperHeroIcon = (
+	<Icon>
+		<img src={SuperHero} alt="SuperHero"/>
+	</Icon>
+)
+const SeriesIcon = (
+	<Icon>
+		<img src={Series} alt="Series"/>
+	</Icon>
+)
 class Header extends React.Component {
 	lintenRouteChanging = () => {
 		this.unlisten = this.props.history.listen((location, action) => {
@@ -19,6 +42,22 @@ class Header extends React.Component {
 	}
 	componentWillUnmount() {
 		this.destroyLintening();
+	}
+	endNavbarItem = () => {
+		let items = [
+			{ text : 'Home', url : '/'},
+			{ text: 'Characters', url: '/characters'},
+			{ text: 'Comics', url: '/comics'},
+			{ text: 'Series', url: '/series'}
+		]
+		let { url } = this.props.match
+		return items.map((item)=>{
+			return (
+				<a className={`navbar-item ${url === item.url ? 'is-active':''}`} href={item.url} key={item.text}>
+					{item.text}
+				</a>
+			)
+		})
 	}
 	render() {
 		return (
@@ -37,24 +76,19 @@ class Header extends React.Component {
 									</div>
 								</div>
 								<div className="navbar-end">
-									<div className="navbar-item has-dropdown is-hoverable">
-										<div className="navbar-link">
-											Theme
-										</div>
-										<div className="navbar-dropdown is-boxed">
-											<div className="navbar-item">
-												Dark Theme
-											</div>
-											<div className="navbar-item">
-												Light Theme
-											</div>
-
-										</div>
-									</div>
+									{ this.endNavbarItem() }
 								</div>
 							</div>
 						</div>
 					</nav>
+					<div className="mws-bottom-navbar">
+						<BottomNavigation showLabels>
+							<BottomNavigationAction label="Home" icon={ <HomeIcon /> } />
+							<BottomNavigationAction label="Characters" component={ Link } to="/characters" icon={ SuperHeroIcon } />
+							<BottomNavigationAction label="Comics" icon={ ComicIcon } />
+							<BottomNavigationAction label="Series" icon={ SeriesIcon } />
+						</BottomNavigation>
+					</div>
 			</React.Fragment>
 		)
 	}

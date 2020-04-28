@@ -7,11 +7,13 @@ import CardList from '../../components/cardList'
 import './style.scss'
 import Loading from '../../components/loading/index'
 import { cardType } from '../../../utils/helper'
+import ContainerPage from '../../components/containerPages'
 
 class Explore extends React.Component{
 	componentDidMount() {
 		let { params } = this.props.match
 		let limit = 20
+
 		if(this.props.explore.length < 1){
 			if(params.explore === 'comics')
 				this.props.fetchComics({limit})
@@ -31,11 +33,9 @@ class Explore extends React.Component{
 			return <Loading />
 		return (
 			<React.Fragment>
-				<div className="hero-body">
-					<div className="container has-text-centered">
-						<CardList data={explore} type={cardType(explore[0])}/>
-					</div>
-				</div>
+				<ContainerPage>
+					<CardList data={explore} type={cardType(explore[0])}/>
+				</ContainerPage>
 			</React.Fragment>
 		)
 	}
