@@ -2,17 +2,19 @@ import React from 'react'
 import './style.scss'
 import Image from '../../elements/image/index'
 import history from '../../../history'
+import { cardType } from '../../../utils/helper'
 
 class CardHorizontalMini extends React.Component{
 	redirect = () => {
 		let { data } = this.props
-		let middleUrl = data.name ? 'character': data.series && data.title ? 'comic': 'series'
+		let middleUrl = cardType(data)
 
 		history.push(`/${middleUrl}/${data.id}`)
+		window.location.reload()
 	}
 	render() {
 		let { data } = this.props
-		let middleUrl = data.name ? 'character': data.series && data.title ? 'comic': 'series'
+		let middleUrl = cardType(data)
 		return (
 			<React.Fragment>
 				<a className="mws-card-mini-horizontal" href={`/${middleUrl}/${this.props.data.id}`} onMouseDown={this.redirect}>

@@ -1,13 +1,16 @@
 import React from 'react'
 import Image from '../../elements/image'
 import './style.scss'
+import { Link } from 'react-router-dom';
+import { cardType } from '../../../utils/helper'
+
 class CardHorizontal extends React.Component {
 
 	render() {
 		let { data } = this.props
 		return (
 			<React.Fragment>
-				<div className="mws-card-horizontal columns">
+				<Link className="mws-card-horizontal columns" to={'/' + cardType(data) + '/' + data.id}>
 					<div className="column is-one-quarter">
 						<Image src={data.thumbnail.path} ext={data.thumbnail.extension} alt={data.title} />
 					</div>
@@ -45,7 +48,7 @@ class CardHorizontal extends React.Component {
 							</div>
 						</div>
 					</div>
-				</div>
+				</Link>
 			</React.Fragment>
 		)
 	}
