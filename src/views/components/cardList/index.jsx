@@ -5,6 +5,7 @@ import './style.scss'
 import {fetchCharacters} from '../../../actions/characters'
 import {fetchComics} from '../../../actions/comics'
 import {fetchSeries} from '../../../actions/series'
+import { fetchExplore } from '../../../actions/explore'
 import { connect } from 'react-redux';
 import MiniLoader from '../loader/miniLoader'
 
@@ -12,33 +13,27 @@ class CardList extends React.Component {
 	state = {
     isLoading: false,
 	}
-	fetchNewData = async () => {
-		let { offset, limit } = this.props.pagination.payload
-		let _offset = offset + limit
-		let response = null
 
-		if ( this.props.type === 'comic') {
-			response = await this.props.fetchComics({limit, offset: _offset })
-		}
-		else if( this.props.type === 'series' ) {
-			response = await this.props.fetchSeries({limit, offset: _offset })
-		} else {
-			response = await this.props.fetchCharacters({limit, offset: _offset})
-		}
-		return response
-	}
 	handleScroll = async () => {
+		let { offset, limit } = this.props.pagination
+		let _offset = offset + limit
+
     if (((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 300)) && !this.state.isLoading) {
 			this.setState({
 				isLoading: true
 			});
 
-			this.fetchNewData().then(()=>{
+			this.props.fetchExplore({offset: _offset, limit}, this.props.type, true).then((res)=>{
 				this.setState({
 					isLoading: false
 				});
 			})
     }
+	}
+	loadingState = () => {
+		if(this.state.isLoading)
+			return <MiniLoader />
+		return null
 	}
 	componentDidMount = () => window.addEventListener('scroll', this.handleScroll)
 
@@ -58,20 +53,14 @@ class CardList extends React.Component {
 						)
 					})
 				}
-				{(
-					() => {
-						if(this.state.isLoading){
-							return <MiniLoader />
-						}
-					}
-				)()}
+				{ this.loadingState() }
 			</div>
 		)
 	}
 }
 const mapStateToProps = (state) => {
 	return {
-		pagination : state.pagination
+		pagination : state.explore.pagination
 	}
 }
-export default connect(mapStateToProps, { fetchCharacters, fetchComics, fetchSeries })(CardList);
+export default connect(mapStateToProps, { fetchCharacters, fetchComics, fetchSeries, fetchExplore })(CardList);

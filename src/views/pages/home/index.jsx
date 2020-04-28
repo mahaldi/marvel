@@ -26,7 +26,7 @@ class Home extends React.Component {
 }
 const mapStateToProps = (state) =>{
 	return {
-		characters : state.characters
+		characters : state.explore.items
 	}
 }
 export default connect( mapStateToProps, {fetchCharacters})(Home)

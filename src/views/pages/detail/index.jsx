@@ -17,30 +17,31 @@ class Character extends React.Component {
 		}
 	}
 	getDataDetail = async () => {
-		let { id, type } = this.props.match.params
-		let response
-		if( type === 'character' ){
-			response = await this.props.fetchCharacter(id)
-		} else if ( type === 'comic' ){
-			response = await this.props.fetchCommicById(id)
-		} else if (type === 'series') {
-			response = await this.props.fetchSeriesById(id)
-		} else {
-			this.props.history.push('/')
-			return window.location.reload()
-		}
+		try{
+			let { id, type } = this.props.match.params
 
-		return response
-	}
-	componentDidMount() {
-		this.getDataDetail().then((res)=>{}).catch((err)=>{
+			if( type === 'character' ){
+				this.props.fetchCharacter(id)
+			} else if ( type === 'comic' ){
+				this.props.fetchCommicById(id)
+			} else if (type === 'series') {
+				this.props.fetchSeriesById(id)
+			} else {
+				this.props.history.push('/')
+				return window.location.reload()
+			}
+
+		}catch(err){
 			this.setState({
 				error : {
 					isError: true,
 					status: err.response.data.status
 				}
 			})
-		})
+		}
+	}
+	componentDidMount() {
+		this.getDataDetail()
 
 		this.unlisten = this.props.history.listen((location, action) => {
 			//kalau dari card mini horizontal ke halaman ini gk kepanggil lg endpointnya

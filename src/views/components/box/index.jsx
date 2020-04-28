@@ -43,7 +43,7 @@ class Box extends React.Component {
 	render() {
 		if( this.dataRendered().length < 1 )
 			return <MiniLoader />
-		let data = this.dataRendered()
+		let data = this.dataRendered().items
 		return (
 			<React.Fragment>
 				<div className="box">
