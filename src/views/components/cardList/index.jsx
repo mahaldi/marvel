@@ -1,6 +1,5 @@
 import React from 'react'
 import Card from '../card'
-import { Link } from 'react-router-dom';
 import './style.scss'
 import {fetchCharacters} from '../../../actions/characters'
 import {fetchComics} from '../../../actions/comics'
@@ -40,16 +39,13 @@ class CardList extends React.Component {
 	componentWillUnmount = () => window.removeEventListener('scroll', this.handleScroll)
 
 	render() {
-		let { data, type }  = this.props
+		let { data }  = this.props
 		return (
 			<div className="card-list">
 				{
 					data.map((item) => {
-						let middleUrl = type.slice(0,-1)
 						return(
-							<Link to={ '/' + middleUrl + '/' + item.id} key={item.id}>
-								<Card data={item} />
-							</Link>
+							<Card data={item} key={item.id}/>
 						)
 					})
 				}
