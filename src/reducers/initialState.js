@@ -1,5 +1,9 @@
 export default {
-	characters : [],
+	characters : {
+		items: [],
+		loading: false,
+		error: null
+	},
 	character : {},
 	detail: {},
 	isLoading : false,
