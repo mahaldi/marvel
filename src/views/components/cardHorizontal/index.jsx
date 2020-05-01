@@ -5,7 +5,18 @@ import { Link } from 'react-router-dom';
 import { cardType } from '../../../utils/helper'
 
 class CardHorizontal extends React.Component {
-
+	_itemInfo = (copyText, payload) => {
+		return (
+			<div className="item-info">
+				<div className="left-side">
+					<p>{copyText} :</p>
+				</div>
+				<div className="info-content">
+					<p>{payload || 'No Data'}</p>
+				</div>
+			</div>
+		)
+	}
 	render() {
 		let { data } = this.props
 		return (
@@ -15,38 +26,9 @@ class CardHorizontal extends React.Component {
 						<Image src={data.thumbnail.path} ext={data.thumbnail.extension} alt={data.title} />
 					</div>
 					<div className="column info">
-						<div className="item-info">
-							<div className="left-side">
-								<p>Title :</p>
-							</div>
-							<div className="info-content">
-								<p>{data.name || data.title || 'No Title'}</p>
-							</div>
-						</div>
-						<div className="item-info">
-							<div className="left-side">
-								<p>Isbn :</p>
-							</div>
-							<div className="info-content">
-								<p>{data.isbn || 'No Isbn'}</p>
-							</div>
-						</div>
-						<div className="item-info">
-							<div className="left-side">
-								<p>Description :</p>
-							</div>
-							<div className="info-content">
-								<p>{data.description || 'No Description'}</p>
-							</div>
-						</div>
-						<div className="item-info">
-							<div className="left-side">
-								<p>More Detail :</p>
-							</div>
-							<div className="info-content urls">
-								<a href={data.urls[0].url} >{data.urls[0].url}</a>
-							</div>
-						</div>
+						{ this._itemInfo( 'Title', data.name || data.title ) }
+						{ this._itemInfo( 'Isbn', data.isbn ) }
+						{ this._itemInfo( 'Description', data.description ) }
 					</div>
 				</Link>
 			</React.Fragment>
