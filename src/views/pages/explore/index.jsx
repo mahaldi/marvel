@@ -11,26 +11,29 @@ import ContainerPage from '../../components/containerPages'
 
 class Explore extends React.Component{
 	lintenRouteChanging = () => {
+		let { params } = this.props.match
 		this.unlisten = this.props.history.listen((location, action) => {
-			window.location.reload()
+			let pathName = location.pathname
+			if( params.explore === 'comics' || params.explore === 'series' || params.explore === 'characters')
+				this.getData(pathName.slice(1, pathName.length))
     });
 	}
-	getData = () => {
-		let { params } = this.props.match
+	getData = (exploreType = 'characters') => {
 		let limit = 20
-		this.props.fetchExplore({limit}, params.explore)
+		this.props.fetchExplore({limit}, exploreType)
 	}
 	destroyLintening = () => {
 		this.unlisten();
 	}
 	componentDidMount() {
 		let { params } = this.props.match
+		// redirect if the route in index is wrong
 		if (params.explore !== 'comics' && params.explore !== 'series' && params.explore !== 'characters') {
 			this.props.history.push('/characters')
 			window.location.reload()
 			return
 		}
-		this.getData()
+		this.getData(params.explore)
 		this.lintenRouteChanging()
 	}
 	componentWillUnmount() {
