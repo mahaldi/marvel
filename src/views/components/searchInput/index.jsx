@@ -11,7 +11,55 @@ import Drawer from '@material-ui/core/Drawer';
 import MediaQuery from 'react-responsive'
 import WindowSize from '../../../utils/windowResize'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+// import compose from 'redux'
+import { withStyles } from '@material-ui/core/styles';
+import SearchIcon from '@material-ui/icons/Search';
+import { fade } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 
+const styles = theme => ({
+	searchMobile: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    margin: '0 auto',
+    width: '66%',
+		backgroundColor: 'rgb(246, 246, 246)',
+		height: '36px',
+		margin: 'auto auto auto 10px'
+	},
+	titleItem: {
+		// color: 'color: rgba(49, 53, 59, 0.96)',
+		margin: '16px 0px 4px'
+	},
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+		backgroundColor: fade(theme.palette.common.white, 0.15),
+		[theme.breakpoints.up('md')]: {
+			'&:hover': {
+				backgroundColor: fade(theme.palette.common.white, 0.25),
+			}
+		},
+    margin: '0 auto',
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '50%',
+    },
+  },
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+	},
+	drawerPaper: {
+		height: '100%'
+	}
+})
 class SearchInput extends React.Component {
 	constructor(props){
 		super(props)
@@ -59,11 +107,12 @@ class SearchInput extends React.Component {
 			this.props.setOverlay(value)
 	}
 	_renderItem = ( payload=null, title ) =>{
+		const { classes } = this.props;
 		if( !payload ) return null
 		return payload.map(( item, idx )=>{
 			return (
 				<div className="item-section" key={idx}>
-					{ idx === 0 && <p className="title">{ title }</p> }
+					{ idx === 0 &&  <Typography variantMapping="p" color="primary" classes={{ root: classes.titleItem }}>{ title }</Typography> }
 					<div className="search-item" key={item.id}>
 							<CardHorizontalMini data={item}/>
 					</div>
@@ -73,14 +122,19 @@ class SearchInput extends React.Component {
 	}
 	checkingState = () => {
 		let { value, isFocus } = this.state
-		let val = value.length < 1 || !isFocus
-		return val
+		if(WindowSize().w >= 1024){
+			let val = value.length < 1 || !isFocus
+			return val
+		}
+		return value.length < 1
+		
 	}
 	renderSearchList = () => {
 		let { characters, comics, series } = this.state
+		if( this.checkingState() ) return null
 		return (
 			<React.Fragment>
-				<div className={`search-list ${ this.checkingState() ? 'hide':''}`}>
+				<div className="search-list">
 					{ this._renderItem(characters, 'Characters') }
 					{ this._renderItem(comics, 'Comics') }
 					{ this._renderItem(series, 'Series') }
@@ -97,11 +151,20 @@ class SearchInput extends React.Component {
 		})
 	}
 	drawerSearchList = () => {
+		const { classes } = this.props;
 		return (
-			<Drawer anchor="bottom" height="100%" open={this.state.isOpen} onClose={this.toggleDrawer(false)}>
+			<Drawer anchor="bottom" classes={{
+				paper : classes.drawerPaper
+			}} open={this.state.isOpen} onClose={this.toggleDrawer(false)}>
 				<div className="search-list-top">
 					<button onClick={ () => this.onClick(false) }><ArrowBackIcon /></button>
-					<Input onSearch={this.onSearch} />
+					<div className={classes.searchMobile}>
+							<div className={classes.searchIcon}>
+								<SearchIcon />
+							</div>
+						<Input onSearch={this.onSearch} onFocus={this.onFocus} />
+					</div>
+					<button onClick={ () => this.onClick(false) }>Batal</button>
 				</div>
 				{ this.renderSearchList() }
 			</Drawer>
@@ -113,13 +176,22 @@ class SearchInput extends React.Component {
 				isOpen: val
 			})
 	}
+	componentDidMount() {
+		this.onSearch('s')
+	}
 	render() {
+		const { classes } = this.props;
 		return (
 			<React.Fragment>
-				<Input onSearch={this.onSearch} onFocus={this.onFocus} onClick={this.onClick}/>
-				<MediaQuery minDeviceWidth={1024}>
-					{ this.renderSearchList() }
-				</MediaQuery>
+				<div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+					<Input onSearch={this.onSearch} onFocus={this.onFocus} onClick={this.onClick}/>
+					<MediaQuery minDeviceWidth={1024}>
+						{ this.renderSearchList() }
+					</MediaQuery>
+				</div>
 				<MediaQuery maxDeviceWidth={1023}>
 					{ this.drawerSearchList() }
 				</MediaQuery>
@@ -128,4 +200,5 @@ class SearchInput extends React.Component {
 	}
 }
 
-export default connect(null, { setOverlay })(SearchInput)
+// export default connect(null, { setOverlay })(SearchInput)
+export default connect( null, { setOverlay })(withStyles(styles)(SearchInput))
