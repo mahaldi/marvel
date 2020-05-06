@@ -21,7 +21,7 @@ class CardHorizontal extends React.Component {
 		let { data } = this.props
 		return (
 			<React.Fragment>
-				<Link className="mws-card-horizontal columns" to={'/' + cardType(data) + '/' + data.id}>
+				<a className="mws-card-horizontal columns" href={'/' + cardType(data) + '/' + data.id}>
 					<div className="column is-one-quarter">
 						<Image src={data.thumbnail.path} ext={data.thumbnail.extension} alt={data.title} />
 					</div>
@@ -30,7 +30,7 @@ class CardHorizontal extends React.Component {
 						{ this._itemInfo( 'Isbn', data.isbn ) }
 						{ this._itemInfo( 'Description', data.description ) }
 					</div>
-				</Link>
+				</a>
 			</React.Fragment>
 		)
 	}

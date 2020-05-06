@@ -4,16 +4,28 @@ export default {
 		loading: false,
 		error: null
 	},
-	character : {},
+	character : {
+		item: {},
+		loading: false,
+		error: null
+	},
+	comic: {
+		item: {},
+		loading: false,
+		error: null
+	},
+	series: {
+		item: {},
+		loading: false,
+		error: null
+	},
 	detail: {},
-	isLoading : false,
-	charactersPagination : {},
 	comics: {
 		items: [],
 		loading: false,
 		error: null
 	},
-	series: {
+	serieses: {
 		items: [],
 		loading: false,
 		error: null

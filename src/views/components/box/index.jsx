@@ -6,48 +6,40 @@ import {
 } from '../../../actions/characters'
 import { fetchCharacterByComicId } from '../../../actions/comics'
 import { fetchCharactersBySeriesId, fetchComicsBySeriesId } from '../../../actions/series'
+import loadable from '@loadable/component'
 
 // import PropTypes  from 'prop-types'
-import MiniLoader from '../loader/miniLoader'
-import CardHorizontal from '../cardHorizontal'
+const CardHorizontal = loadable(() => import('../cardHorizontal'))
+const CardHorizontalSkeleton = loadable(() => import('../cardHorizontal/skeleton'))
 
 class Box extends React.Component {
 	static defaultProps = {
 		type : 'comics'
 	}
-	type = () => {
-		let { type } = this.props
-		return type
-	}
 	componentDidMount() {
-		let { id, by } = this.props
+		let { id, by, type } = this.props
 
-		if( this.type() === 'comics' && by === 'character')
+		if( type === 'comics' && by === 'character')
 			this.props.fetchComicsByCharacter(id)
-		else if( this.type() === 'characters' && by === 'comic')
+		else if( type === 'characters' && by === 'comic')
 			this.props.fetchCharacterByComicId(id)
-		else if( this.type() === 'comics' && by === 'series')
+		else if( type === 'comics' && by === 'series')
 			this.props.fetchComicsBySeriesId(id)
-		else if( this.type() === 'characters' && by === 'series')
+		else if( type === 'characters' && by === 'series')
 			this.props.fetchCharactersBySeriesId(id)
 		else
 			this.props.fetchSeriesByCharacter(id)
 	}
-	dataRendered = () => {
-		if( this.type() === 'comics' )
-			return this.props.comics
-		else if ( this.type() === 'characters')
-			return this.props.characters
-		return this.props.series
+	data = () => {
+		return this.props[this.props.type]
 	}
 	render() {
-		if( this.dataRendered().items.length < 1 )
-			return <MiniLoader />
-		let data = this.dataRendered().items
+		if( this.data().items.length < 1 )
+			return <CardHorizontalSkeleton />
+		let data = this.data().items
 		return (
 			<React.Fragment>
 				<div className="box">
-
 					{
 						data.map((item)=>{
 							return (
@@ -68,7 +60,7 @@ class Box extends React.Component {
 const mapStateToProps = (state) => {
 	return {
 		comics: state.comics,
-		series: state.series,
+		series: state.serieses,
 		characters: state.characters
 	}
 }

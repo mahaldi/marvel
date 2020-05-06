@@ -1,5 +1,23 @@
 import React from 'react'
 import './style.scss'
+import InputBase from '@material-ui/core/InputBase';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = theme => ({
+
+	inputRoot: {
+		color: 'inherit',
+		width: '100%'
+		},
+		inputInput: {
+		padding: theme.spacing(1, 1, 1, 0),
+		// vertical padding + font size from searchIcon
+		paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+		transition: theme.transitions.create('width'),
+		width: '100%',
+		},
+})
+
 class Input extends React.Component {
 	constructor(props) {
 		super(props)
@@ -32,22 +50,24 @@ class Input extends React.Component {
 		this.props.onClick(true)
 	}
 	render() {
-		let { value } = this.state
 		let { placeholder } = this.props
+		const { classes } = this.props;
 		return (
 			<React.Fragment>
-				<input
-					type="text"
-					className="mws-input"
-					value={value}
-					placeholder={placeholder}
-					onFocus={this._onFocus}
-					onBlur={this._onFocus}
-					onChange={this._onChange}
-					onClick={this._onClick}/>
+					<InputBase
+						placeholder={placeholder}
+						classes={{
+							root: classes.inputRoot,
+							input: classes.inputInput,
+						}}
+						onFocus={this._onFocus}
+						onBlur={this._onFocus}
+						onChange={this._onChange}
+						onClick={this._onClick}/>
 			</React.Fragment>
 		)
 	}
 }
 
-export default Input
+// export default Input
+export default withStyles(styles)(Input);

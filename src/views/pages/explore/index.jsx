@@ -4,10 +4,11 @@ import {fetchSeries} from '../../../actions/series'
 import {fetchComics} from '../../../actions/comics'
 import { fetchExplore } from '../../../actions/explore'
 import { connect } from 'react-redux';
-import CardList from '../../components/cardList'
 import './style.scss'
-import Loading from '../../components/loading/index'
-import ContainerPage from '../../components/containerPages'
+import loadable from '@loadable/component'
+
+const CardList = loadable(() => import('../../components/cardList'))
+const ContainerPage = loadable(() => import('../../components/containerPages'))
 
 class Explore extends React.Component{
 	lintenRouteChanging = () => {
@@ -42,12 +43,11 @@ class Explore extends React.Component{
 	render() {
 		let { explore } = this.props
 		let { params } = this.props.match
-		if( explore.loading )
-			return <Loading />
 		return (
 			<React.Fragment>
 				<ContainerPage>
-					<CardList data={explore.items} type={params.explore} />
+					<p className="title">{params.explore.toUpperCase()}</p>
+					<CardList data={explore.items} isFetching={ explore.loading } type={params.explore} />
 				</ContainerPage>
 			</React.Fragment>
 		)

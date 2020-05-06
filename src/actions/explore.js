@@ -7,6 +7,7 @@ import {
 import { fetchCharacters } from './characters'
 import { fetchComics } from './comics'
 import { fetchSeries } from './series'
+import pMinDelay from 'p-min-delay'
 
 export const explorePagination = (response) => dispatch => {
 
@@ -48,13 +49,13 @@ export const fetchExplore = (params={}, type = 'characters', isInfinite = false)
 		if( !isInfinite )
 			dispatch(dispatchExploreBegin())
 
-		let response
+		let response, delay= 2000
 		if(type === 'characters')
-			response = await dispatch(fetchCharacters(params))
+			response = await pMinDelay(dispatch(fetchCharacters(params)), delay)
 		else if(type === 'comics')
-			response = await dispatch(fetchComics(params))
+			response = await pMinDelay(dispatch(fetchComics(params)), delay)
 		else
-			response = await dispatch(fetchSeries(params))
+			response = await pMinDelay(dispatch(fetchSeries(params)), delay)
 
 		if(!isInfinite)
 			dispatch(dispatchExploreSuccess(response))

@@ -3,7 +3,10 @@ import {
 	FETCH_COMICS,
 	FETCH_DETAIL,
 	FETCH_COMICS_BEGIN,
-	FETCH_COMICS_FAILURE
+	FETCH_COMICS_FAILURE,
+	FETCH_COMIC_BEGIN,
+	FETCH_COMIC,
+	FETCH_COMIC_FAILURE
 } from './types'
 
 import ComicsAPI  from '../apis/comics'
@@ -25,13 +28,23 @@ export const fetchComics = ({limit= 20, offset = 20}) => async dispatch => {
 	}
 }
 export const fetchCommicById = id => async dispatch => {
-	const response = await ComicsAPI.getComicDetail(id)
+	try{
+		dispatch({ type: FETCH_COMIC_BEGIN })
+		const response = await ComicsAPI.getComicDetail(id)
 
-	dispatch({
-		type: FETCH_DETAIL,
-		payload: response.data.data.results[0]
-	})
-	return response
+		dispatch({
+			type: FETCH_DETAIL,
+			payload: response.data.data.results[0]
+		})
+		dispatch({
+			type: FETCH_COMIC,
+			payload: response.data.data.results[0]
+		})
+		return response
+
+	}catch(err){
+		dispatch({ type: FETCH_COMIC_FAILURE, payload: err.response })
+	}
 }
 export const fetchCharacterByComicId = id => async dispatch => {
 	const response = await ComicsAPI.getCharactersByComicId(id)
