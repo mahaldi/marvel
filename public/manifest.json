@@ -3,23 +3,29 @@
   "name": "mws-marvel-api",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "icon-64x64.ico",
+      "type": "image/x-icon",
+      "sizes": "64x64"
     },
     {
-      "src": "favicon.ico",
+      "src": "icon-192x192.ico",
       "type": "image/x-icon",
       "sizes": "192x192"
     },
     {
       "src": "favicon.ico",
       "type": "image/x-icon",
-      "sizes": "512x512"
+      "sizes": "256x256"
+    },
+    {
+      "src": "favicon.png",
+      "sizes": "256x256",
+      "type": "image/png"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#467fcf",
+  "background_color": "#ffffff",
+  "orientation": "portrait"
 }
