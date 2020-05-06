@@ -1,12 +1,15 @@
 import React from 'react'
-import Card from '../card'
 import './style.scss'
 import {fetchCharacters} from '../../../actions/characters'
 import {fetchComics} from '../../../actions/comics'
 import {fetchSeries} from '../../../actions/series'
 import { fetchExplore } from '../../../actions/explore'
 import { connect } from 'react-redux';
-import MiniLoader from '../loader/miniLoader'
+import CardSkeleton from '../card/skeleton'
+import loadable from '@loadable/component'
+
+const MiniLoader = loadable(() => import('../loader/miniLoader'))
+const Card = loadable(() => import('../card'))
 
 class CardList extends React.Component {
 	state = {
@@ -39,13 +42,17 @@ class CardList extends React.Component {
 	componentWillUnmount = () => window.removeEventListener('scroll', this.handleScroll)
 
 	render() {
-		let { data }  = this.props
+		let { data, isFetching }  = this.props
+		if( isFetching )
+			return Array.from(new Array(5)).map((item,index)=>(
+				<CardSkeleton key={index}/>
+			))
 		return (
 			<div className="card-list">
 				{
-					data.map((item) => {
+					data.map((item, index) => {
 						return(
-							<Card data={item} key={item.id}/>
+							<Card data={item} key={index}/>
 						)
 					})
 				}

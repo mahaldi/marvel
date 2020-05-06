@@ -3,11 +3,12 @@ import {fetchCharacter} from '../../../actions/characters'
 import {fetchSeriesById} from '../../../actions/series'
 import {fetchCommicById} from '../../../actions/comics'
 import { connect } from 'react-redux'
-import Card from '../../components/card'
-import Loading from '../../components/loading/index'
-import Box from '../../components/box'
-import ErrorContent from '../../components/ErrorContent'
 import './style.scss'
+import loadable from '@loadable/component'
+
+const ErrorContent = loadable(() => import('../../components/ErrorContent'))
+const Box = loadable(() => import('../../components/box'))
+const Card = loadable(() => import('../../components/card'))
 
 class Character extends React.Component {
 	state = {
@@ -43,22 +44,20 @@ class Character extends React.Component {
 		this.getDataDetail()
 
 		this.unlisten = this.props.history.listen((location, action) => {
-			//kalau dari card mini horizontal ke halaman ini gk kepanggil lg endpointnya
-			window.location.reload();
+			this.getDataDetail()
     });
 	}
 	componentWillUnmount(){
 		this.unlisten()
 	}
 	render() {
-		let { detail } = this.props
 		let { id, type } = this.props.match.params
-		let { error } = this.state
-		if( error.isError )
-			return <ErrorContent error={error.status}/>
+		let error = this.props[type].error
+		let loading = this.props[type].loading
+		let data = this.props[type].item
 
-		if( Object.keys(detail).length < 1 )
-			return <Loading />
+		if( error )
+			return <ErrorContent error={error.data.status}/>
 
 		return (
 			<React.Fragment>
@@ -66,7 +65,7 @@ class Character extends React.Component {
 					<div className="container has-text-centered">
 						<div className="columns">
 							<div className="column is-one-fifth">
-								<Card data={detail}/>
+								<Card data={data} loading={loading}/>
 							</div>
 							<div className="column">
 								{ ( type === 'character' || type === 'series') &&
@@ -99,7 +98,9 @@ class Character extends React.Component {
 }
 const mapStateToProps = (state) => {
 	return {
-		detail: state.detail
+		character: state.character,
+		comic: state.comic,
+		series: state.series
 	}
 }
 export default connect(mapStateToProps, { fetchCharacter, fetchSeriesById, fetchCommicById })(Character)

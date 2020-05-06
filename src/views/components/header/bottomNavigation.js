@@ -1,15 +1,17 @@
-
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import { Link } from 'react-router-dom'
 import React from 'react'
 
-import HomeIcon from '@material-ui/icons/Home';
 import Comic from '../../../assets/static/comic.svg'
 import SuperHero from '../../../assets/static/superhero.svg'
 import Series from '../../../assets/static/series.png'
-import Icon from "@material-ui/core/Icon";
 import { withStyles } from '@material-ui/core/styles';
+import history from '../../../history'
+import loadable from '@loadable/component'
+import BottomNavigation from '@material-ui/core/BottomNavigation'
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
+
+const HomeIcon = loadable(() => import('@material-ui/icons/Home'))
+const Icon = loadable(() => import('@material-ui/core/Icon'))
 
 const ComicIcon = (
 	<Icon>
@@ -39,12 +41,13 @@ const styles = theme => ({
 })
 const FixBottomNavigation = (props) => {
 	let { classes } = props
+	let { pathname } = history.location
 	return (
-		<BottomNavigation showLabels className={classes.stickToBottom}>
-			<BottomNavigationAction label="Home" component={Link} to="/" icon={<HomeIcon />} />
-			<BottomNavigationAction label="Characters" component={Link} to="/characters" icon={SuperHeroIcon} />
-			<BottomNavigationAction label="Comics" component={Link} to="/comics" icon={ComicIcon} />
-			<BottomNavigationAction label="Series" component={Link} to="/series" icon={SeriesIcon} />
+		<BottomNavigation showLabels value={pathname} className={classes.stickToBottom}>
+			<BottomNavigationAction label="Home" value="/" component={Link} to="/" icon={<HomeIcon />} />
+			<BottomNavigationAction label="Characters" value="/characters" component={Link} to="/characters" icon={SuperHeroIcon} />
+			<BottomNavigationAction label="Comics" value="/comics" component={Link} to="/comics" icon={ComicIcon} />
+			<BottomNavigationAction label="Series" value="/series" component={Link} to="/series" icon={SeriesIcon} />
 		</BottomNavigation>
 	)
 }

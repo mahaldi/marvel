@@ -1,35 +1,33 @@
 import React from 'react'
 import './style.scss'
 import Input from '../../elements/input'
-import CardHorizontalMini from '../cardHorizontalMini'
 import CharactersAPI from '../../../apis/characters'
 import ComicsAPI from '../../../apis/comics'
 import SeriesAPI from '../../../apis/series'
 import { setOverlay } from '../../../actions/systems'
 import { connect } from 'react-redux'
-import Drawer from '@material-ui/core/Drawer';
 import MediaQuery from 'react-responsive'
 import WindowSize from '../../../utils/windowResize'
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-// import compose from 'redux'
 import { withStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
 import { fade } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+import loadable from '@loadable/component'
+
+const CardHorizontalMini = loadable(() => import('../cardHorizontalMini'))
+const Drawer = loadable(() => import('@material-ui/core/Drawer'))
+const Typography = loadable(() => import('@material-ui/core/Typography'))
+const ArrowBackIcon = loadable(() => import('@material-ui/icons/ArrowBack'))
+const SearchIcon = loadable(() => import('@material-ui/icons/Search'))
 
 const styles = theme => ({
 	searchMobile: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
-    margin: '0 auto',
     width: '66%',
 		backgroundColor: 'rgb(246, 246, 246)',
 		height: '36px',
 		margin: 'auto auto auto 10px'
 	},
 	titleItem: {
-		// color: 'color: rgba(49, 53, 59, 0.96)',
 		margin: '16px 0px 4px'
 	},
   search: {
@@ -112,7 +110,7 @@ class SearchInput extends React.Component {
 		return payload.map(( item, idx )=>{
 			return (
 				<div className="item-section" key={idx}>
-					{ idx === 0 &&  <Typography variantMapping="p" color="primary" classes={{ root: classes.titleItem }}>{ title }</Typography> }
+					{ idx === 0 &&  <Typography color="primary" classes={{ root: classes.titleItem }}>{ title }</Typography> }
 					<div className="search-item" key={item.id}>
 							<CardHorizontalMini data={item}/>
 					</div>
@@ -127,7 +125,7 @@ class SearchInput extends React.Component {
 			return val
 		}
 		return value.length < 1
-		
+
 	}
 	renderSearchList = () => {
 		let { characters, comics, series } = this.state

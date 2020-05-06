@@ -1,14 +1,18 @@
 import React from 'react'
 import './style.scss'
-import Image from '../../elements/image'
 import { cardType } from '../../../utils/helper'
 import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
+import loadable from '@loadable/component'
+import CardSkeleton from './skeleton'
+
+const Button = loadable(() => import('@material-ui/core/Button'))
+const Image = loadable(() => import('../../elements/image'))
 
 class Card extends React.Component {
 
 	render() {
-		let { data } = this.props
+		let { data, loading } = this.props
+		if( loading || Object.keys(data).length < 1 ) return <CardSkeleton />
 		return (
 			<React.Fragment>
 				<Button>
