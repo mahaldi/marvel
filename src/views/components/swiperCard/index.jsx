@@ -18,6 +18,7 @@ class SwiperCard extends React.Component {
 			slidesPerView: 'auto',
 			spaceBetween:  16,
 			slidesOffsetBefore: 16,
+			slidesOffsetAfter: 16,
 			navigation: {
 				nextEl: '.swiper-button-next',
 				prevEl: '.swiper-button-prev'
@@ -27,7 +28,7 @@ class SwiperCard extends React.Component {
 		return (
 			<Swiper {...params}>
 				{
-					Array.from(new Array(5)).map((item,index)=>(
+					Array.from(new Array(20)).map((item,index)=>(
 						<div className="card-item"key={index} ><CardSkeleton key={index}/></div>
 					))
 				}
