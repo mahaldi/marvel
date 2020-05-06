@@ -7,12 +7,12 @@ import CardSkeleton from '../card/skeleton'
 
 const Card = loadable(() => import('../card'))
 const ErrorContent = loadable(() => import('../ErrorContent'))
-// const Swiper = loadable.lib(() => import('react-id-swiper'))
 
 class SwiperCard extends React.Component {
 
 	_renderSwiper = () => {
 		let { data } = this.props
+		let { loading } = this.props
 
 		const params = {
 			slidesPerView: 'auto',
@@ -23,6 +23,16 @@ class SwiperCard extends React.Component {
 				prevEl: '.swiper-button-prev'
 			}
 		}
+		if( loading ) 
+		return (
+			<Swiper {...params}>
+				{
+					Array.from(new Array(5)).map((item,index)=>(
+						<div className="card-item"key={index} ><CardSkeleton key={index}/></div>
+					))
+				}
+			</Swiper>
+		)
 		return (
 			<Swiper {...params}>
 				{
@@ -40,9 +50,6 @@ class SwiperCard extends React.Component {
 	render() {
 		let { loading, error, type } = this.props
 		if( error ) return <ErrorContent error={error.data}/>
-		if( loading ) return Array.from(new Array(5)).map((item,index)=>(
-			<CardSkeleton key={index}/>
-		))
 		return (
 			<div className="mws-swiper-card">
 				<div className="swiper-card-head">
