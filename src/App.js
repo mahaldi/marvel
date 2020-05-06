@@ -1,17 +1,19 @@
 import React from 'react';
 import './assets/scss/index.scss';
-import Header from './views/components/header/component'
-import Home from './views/pages/home'
-import Detail from './views/pages/detail'
-import NotFoundPage from './views/pages/NotFoundPage'
 import { Router, Route, Switch } from 'react-router-dom';
 import history from './history'
-import Overlay from './views/components/overlay'
-import Explore from './views/pages/explore'
 
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Theme from './styles/theme'
+import loadable from '@loadable/component'
+
+const Header = loadable(() => import('./views/components/header/component'))
+const Home = loadable(() => import('./views/pages/home'))
+const Detail = loadable(() => import('./views/pages/detail'))
+const NotFoundPage = loadable(() => import('./views/pages/NotFoundPage'))
+const Overlay = loadable(() => import('./views/components/overlay'))
+const Explore = loadable(() => import('./views/pages/explore'))
 
 class App extends React.Component {
   render(){

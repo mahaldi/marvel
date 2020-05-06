@@ -6,10 +6,9 @@ import loadable from '@loadable/component'
 import CardSkeleton from './skeleton'
 import loadableVisibility from "react-loadable-visibility/loadable-components";
 import Skeleton from '@material-ui/lab/Skeleton';
-
+import pMinDelay from 'p-min-delay'
 const Button = loadable(() => import('@material-ui/core/Button'))
-// const Image = loadable(() => import('../../elements/image'))
-const Image = loadableVisibility(() => import("../../elements/image"), {
+const Image = loadableVisibility(() => pMinDelay(import("../../elements/image"), 1000), {
 	fallback: <Skeleton animation="wave" variant="rect" width="100%" height={324} />
 });
 class Card extends React.Component {
