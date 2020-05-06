@@ -1,9 +1,11 @@
 import React from 'react'
-import Image from '../../elements/image'
 import './style.scss'
-import { Link } from 'react-router-dom';
 import { cardType } from '../../../utils/helper'
-
+import loadableVisibility from "react-loadable-visibility/loadable-components";
+import Skeleton from '@material-ui/lab/Skeleton';
+const Image = loadableVisibility(() => import("../../elements/image"), {
+	fallback: <Skeleton animation="wave" variant="rect" width="100%" height={324} />
+});
 class CardHorizontal extends React.Component {
 	_itemInfo = (copyText, payload) => {
 		return (
