@@ -53,7 +53,7 @@ const sassModuleRegex = /\.module\.(scss|sass)$/;
 var CompressionPlugin = require("compression-webpack-plugin");
 //use this to run webpack analyzer, just run this project (npm start)
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
+const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
 module.exports = function(webpackEnv) {
@@ -260,6 +260,7 @@ module.exports = function(webpackEnv) {
             preset: ['default', { minifyFontValues: { removeQuotes: false } }],
           },
         }),
+        new UglifyJSPlugin()
       ],
       // Automatically split vendor and commons
       // https://twitter.com/wSokra/status/969633336732905474
@@ -538,15 +539,16 @@ module.exports = function(webpackEnv) {
             : undefined
         )
       ),
+      //https://medium.com/@rajaraodv/two-quick-ways-to-reduce-react-apps-size-in-production-82226605771a
       new webpack.DefinePlugin({ //<--key to reduce React's size
         'process.env': {
           'NODE_ENV': JSON.stringify('production')
         }
       }),
-      // new webpack.optimize.DedupePlugin(),
-      // new webpack.optimize.minimize(),
+      // new webpack.optimize.DedupePlugin(), no dedupe plugin on version 4 anymore
       new webpack.optimize.AggressiveMergingPlugin(),
       new CompressionPlugin({
+        filename: "[path].gz[query]",
         algorithm: 'gzip',
         test: /\.js$|\.css$|\.html$/,
         threshold: 10240,
