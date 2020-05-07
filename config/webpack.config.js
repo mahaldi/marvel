@@ -50,6 +50,10 @@ const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
+var CompressionPlugin = require("compression-webpack-plugin");
+//use this to run webpack analyzer, just run this project (npm start)
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
 module.exports = function(webpackEnv) {
@@ -534,6 +538,24 @@ module.exports = function(webpackEnv) {
             : undefined
         )
       ),
+      new webpack.DefinePlugin({ //<--key to reduce React's size
+        'process.env': {
+          'NODE_ENV': JSON.stringify('production')
+        }
+      }),
+      // new webpack.optimize.DedupePlugin(),
+      // new webpack.optimize.minimize(),
+      new webpack.optimize.AggressiveMergingPlugin(),
+      new CompressionPlugin({
+        algorithm: 'gzip',
+        test: /\.js$|\.css$|\.html$/,
+        threshold: 10240,
+        minRatio: 0.8,
+        cache: true,
+        compressionOptions: { level: 9 }
+      }),
+      // new BundleAnalyzerPlugin(),
+
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
       // https://github.com/facebook/create-react-app/issues/5358
