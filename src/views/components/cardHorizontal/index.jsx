@@ -2,8 +2,9 @@ import React from 'react'
 import './style.scss'
 import { cardType } from '../../../utils/helper'
 import loadableVisibility from "react-loadable-visibility/loadable-components";
+import pMinDelay from 'p-min-delay'
 import Skeleton from '@material-ui/lab/Skeleton';
-const Image = loadableVisibility(() => import("../../elements/image"), {
+const Image = loadableVisibility(() => pMinDelay(import("../../elements/image"), 1000), {
 	fallback: <Skeleton animation="wave" variant="rect" width="100%" height={324} />
 });
 class CardHorizontal extends React.Component {
